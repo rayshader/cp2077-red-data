@@ -1,6 +1,6 @@
 import Codeware.*
 
-public class MainTest extends ScriptableEnv {
+public class RedDataTest extends ScriptableEnv {
   private let m_runner: ref<RedTest>;
 
   /// Lifecycle ///
@@ -9,12 +9,13 @@ public class MainTest extends ScriptableEnv {
     this.m_runner = new RedTest();
     this.m_runner.Setup("RedData", [
       new JsonArrayTest(),
-      new JsonObjectTest()
+      new JsonObjectTest(),
+      new JsonTest() as BaseTest
     ]);
   }
 
 }
 
-public static func GetMainTest() -> ref<MainTest> {
-  return ScriptableEnv.Get(n"MainTest") as MainTest;
+public static func GetRedDataTest() -> ref<RedDataTest> {
+  return ScriptableEnv.Get(n"RedDataTest") as RedDataTest;
 }
