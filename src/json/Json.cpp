@@ -2,10 +2,8 @@
 #include <RED4ext/RED4ext.hpp>
 #include <RedLib.hpp>
 
-#include "JsonArray.h"
+#include "Json.h"
 #include "JsonFactory.h"
-#include "JsonObject.h"
-#include "JsonVariant.h"
 
 namespace RedData::Json {
 

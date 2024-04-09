@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 configure_file(src/Config.h.in Config/Config.h)
 
 set(INC_FILES
+        src/json/Json.h
         src/json/JsonType.h
         src/json/JsonVariant.h
         src/json/JsonNull.h
