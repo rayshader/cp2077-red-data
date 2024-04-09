@@ -14,7 +14,6 @@ public class AwesomeSystem extends ScriptableSystem {
   private func OnDetach() {
     this.m_callbackSystem.UnregisterCallback(n"Session/Ready", this, n"OnSessionReady");
     this.m_callbackSystem = null;
-    this.m_storage = null;
   }
 
   /// Game events ///
@@ -41,7 +40,14 @@ public class AwesomeSystem extends ScriptableSystem {
     json.SetKeyInt64("version", 1);
     json.SetKeyBool("isEnabled", true);
     json.SetKeyNull("data");
-    LogChannel(n"Info", json.ToString());
+    let text = json.ToString();
+
+    LogChannel(n"Info", text);
+    json = ParseJson(text) as JsonObject;
+    LogChannel(n"Info", s"name: \(json.GetKeyString("name"))");
+    LogChannel(n"Info", s"version: \(json.GetKeyInt64("version"))");
+    LogChannel(n"Info", s"isEnabled: \(json.GetKeyBool("isEnabled"))");
+    LogChannel(n"Info", s"data: \(json.GetKey("data").IsNull())");
   }
 
 }

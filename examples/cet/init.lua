@@ -9,7 +9,14 @@ local function ExampleJson()
   json:SetKeyInt64("version", 1)
   json:SetKeyBool("isEnabled", true)
   json:SetKeyNull("data")
-  print(json:ToString())
+  local text = json:ToString()
+
+  print(text)
+  json = Game.ParseJson(text)
+  print("name:" .. json:GetKeyString("name"))
+  print("version:" .. tostring(json:GetKeyInt64("version")))
+  print("isEnabled:" .. tostring(json:GetKeyBool("isEnabled")))
+  print("data:" .. tostring(json:GetKey("data"):IsNull()))
 end
 
 registerForEvent('onInit', function()
