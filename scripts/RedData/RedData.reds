@@ -1,0 +1,1 @@
+public static native func ParseJson(text: String) -> ref<JsonVariant>;
