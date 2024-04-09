@@ -65,9 +65,7 @@ console.info(`[RedFS] Library installed.`);
 
 const BUILD_SCRIPT_PATH = `scripts\\RedData`;
 const BUILD_TEST_SCRIPT_PATH = `scripts\\RedTest`;
-const BUILD_STORAGE_PATH = `scripts\\StorageTest`;
 
 fs.cpSync(BUILD_SCRIPT_PATH, GAME_SCRIPT_PATH, {force: true, recursive: true, preserveTimestamps: true});
 fs.cpSync(BUILD_TEST_SCRIPT_PATH, GAME_TEST_SCRIPT_PATH, {force: true, recursive: true, preserveTimestamps: true});
-fs.cpSync(BUILD_STORAGE_PATH, GAME_STORAGE_PATH, {force: true, recursive: true, preserveTimestamps: true});
 console.info(`[RedFS] Scripts installed.`);
