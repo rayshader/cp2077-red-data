@@ -3,8 +3,8 @@
 ![GitHub License](https://img.shields.io/github/license/rayshader/cp2077-red-data)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
-This plugin provides parsing/formatting of different data. It only supports 
-Json for now. It can be used with Redscript and CET.
+This plugin provides parsing/formatting for different data formats. It only 
+supports Json for now. It can be used with Redscript and CET.
 
 # Getting started
 
@@ -20,13 +20,13 @@ Json for now. It can be used with Redscript and CET.
 
 ## Usage
 
-### Read Json
-> ReadAsJson() -> ref&lt;JsonVariant&gt;
+### Parse Json
+> ParseJson(text: String) -> ref&lt;JsonVariant&gt;
 
-e.g. with Json file:
+e.g. with Json data:
 ```json
 {
-  "name": "RedFileSystem",
+  "name": "RedData",
   "version": 1,
   "isEnabled": true,
   "pi": 3.14159265358979323846,
@@ -38,14 +38,13 @@ e.g. with Json file:
 }
 ```
 
-You can read all Json content of a `File` like this:
+You can parse Json content of a `String` like this:
 ```swift
 // ...
-let file = storage.GetFile("config.json");
-let json = file.ReadAsJson();
+let json = ParseJson("<json data from example above>");
 
 if !IsDefined(json) {
-  LogChannel(n"Error", s"Failed to parse Json of file '\(file.GetFilename())'.");
+  LogChannel(n"Error", s"Failed to parse Json.");
   return;
 }
 if !json.IsObject() {
@@ -129,7 +128,7 @@ Get a list of values:
 // ...
 let values = obj.GetValues();
 
-// values[0].GetString() == "RedFileSystem"
+// values[0].GetString() == "RedData"
 // values[1].GetInt64() == 1
 // values[2].GetBool() == true
 // values[3].GetDouble() == 3.14159265358979323846
@@ -203,29 +202,28 @@ let size: Uint32 = items.GetSize();
 > Note: arrays are iterated from 1 to N when using Lua. In this case, you must 
 > iterate from 0 to N - 1.
 
-### Write Json
-> WriteJson(json: ref&lt;JsonVariant&gt;) -> Bool  
-
-You can write Json in a `File` which already exists or create the file in the
-same time. When writing Json, the file is always truncated:
+### Create Json data
+You can create JsonObject/JsonArray.
 
 ```swift
 // ...
 let json = new JsonObject();
 
-json.SetKeyString("name", "RedFileSystem");
+json.SetKeyString("name", "RedData");
 json.SetKeyBool("isEnabled", true);
 json.SetKeyDouble("version", 2.12);
-let file = storage.GetFile("data.json");
-let status = file.WriteJson(json);
-// Same as:
-// let status = file.WriteText(json.ToString());
+let items = new JsonArray();
 
-if !status {
-  LogChannel(n"Error", s"Failed to write in file '\(file.GetFilename())'.");
-} else {
-  LogChannel(n"Info", s"Wrote Json in file '\(file.GetFilename())'.");
-}
+items.AddItemNull();
+items.AddItemBool(true);
+items.AddItemInt64(2077);
+items.AddItemDouble(13.37);
+items.AddItemString("Welcome to Night City!");
+json.SetKey("items", items);
+let text = json.ToString();
+
+LogChannel(n"Info", s"Json:");
+LogChannel(n"Info", text);
 ```
 
 # Development
