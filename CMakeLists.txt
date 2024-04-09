@@ -22,6 +22,7 @@ set(INC_FILES
 set(SRC_FILES
         src/main.cpp
 
+        src/json/Json.cpp
         src/json/JsonVariant.cpp
         src/json/JsonNull.cpp
         src/json/JsonBool.cpp
