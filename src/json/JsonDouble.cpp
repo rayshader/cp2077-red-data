@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-namespace RedData {
+namespace RedData::Json {
 
 JsonDouble::JsonDouble() : value(0) {
   type = JsonType::Double;
@@ -23,4 +23,4 @@ Red::CString JsonDouble::to_string() const {
   return stream.str();
 }
 
-}  // namespace RedData
+}  // namespace RedData::Json

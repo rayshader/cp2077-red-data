@@ -15,7 +15,7 @@
 #include "JsonString.h"
 #include "JsonVariant.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 class JsonFactory {
  public:
@@ -82,6 +82,6 @@ class JsonFactory {
   }
 };
 
-}  // namespace RedData
+}  // namespace RedData::Json
 
 #endif  //REDDATA_JSONFACTORY_H

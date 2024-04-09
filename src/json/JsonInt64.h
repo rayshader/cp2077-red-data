@@ -8,7 +8,7 @@
 
 #include "JsonVariant.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 class JsonInt64 : public JsonVariant {
  private:
@@ -22,16 +22,16 @@ class JsonInt64 : public JsonVariant {
 
   [[nodiscard]] Red::CString to_string() const override;
 
-  RTTI_IMPL_TYPEINFO(RedData::JsonInt64);
+  RTTI_IMPL_TYPEINFO(RedData::Json::JsonInt64);
   RTTI_IMPL_ALLOCATOR();
 };
 
-}  // namespace RedData
+}  // namespace RedData::Json
 
-RTTI_DEFINE_CLASS(RedData::JsonInt64, {
+RTTI_DEFINE_CLASS(RedData::Json::JsonInt64, {
   RTTI_ALIAS("RedData.Json.JsonInt64");
 
-  RTTI_PARENT(RedData::JsonVariant);
+  RTTI_PARENT(RedData::Json::JsonVariant);
 
   RTTI_METHOD(get_int64, "GetInt64");
 

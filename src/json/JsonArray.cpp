@@ -1,7 +1,7 @@
 #include "JsonArray.h"
 #include "JsonFactory.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 JsonArray::JsonArray() {
   type = JsonType::Array;
@@ -168,4 +168,4 @@ Red::CString JsonArray::to_string() const {
   return to_json(this);
 }
 
-}  // namespace RedData
+}  // namespace RedData::Json

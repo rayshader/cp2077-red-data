@@ -2,7 +2,7 @@
 #include "JsonArray.h"
 #include "JsonObject.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 JsonVariant::JsonVariant() : type(JsonType::Undefined) {}
 
@@ -76,4 +76,4 @@ Red::CString JsonVariant::to_string() const {
   return "<undefined>";
 }
 
-}  // namespace RedData
+}  // namespace RedData::Json

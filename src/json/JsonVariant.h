@@ -6,7 +6,7 @@
 
 #include "JsonType.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 class JsonVariant : public Red::IScriptable {
  protected:
@@ -34,15 +34,15 @@ class JsonVariant : public Red::IScriptable {
 
   [[nodiscard]] virtual Red::CString to_string() const;
 
-  RTTI_IMPL_TYPEINFO(RedData::JsonVariant);
+  RTTI_IMPL_TYPEINFO(RedData::Json::JsonVariant);
   RTTI_IMPL_ALLOCATOR();
 };
 
 using JsonUndefined = JsonVariant;
 
-}  // namespace RedData
+}  // namespace RedData::Json
 
-RTTI_DEFINE_CLASS(RedData::JsonVariant, {
+RTTI_DEFINE_CLASS(RedData::Json::JsonVariant, {
   RTTI_ALIAS("RedData.Json.JsonVariant");
 
   RTTI_ABSTRACT();

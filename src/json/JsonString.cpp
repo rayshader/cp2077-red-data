@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-namespace RedData {
+namespace RedData::Json {
 
 // Partially implement RFC7159
 // - \uXXXX is missing
@@ -38,4 +38,4 @@ Red::CString JsonString::to_string() const {
   return "\"" + escaped_value + "\"";
 }
 
-}  // namespace RedData
+}  // namespace RedData::Json

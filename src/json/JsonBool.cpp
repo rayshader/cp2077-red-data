@@ -1,6 +1,6 @@
 #include "JsonBool.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 JsonBool::JsonBool() : value(false) {
   type = JsonType::Bool;
@@ -18,4 +18,4 @@ Red::CString JsonBool::to_string() const {
   return value ? "true" : "false";
 }
 
-}  // namespace RedData
+}  // namespace RedData::Json

@@ -6,7 +6,7 @@
 
 #include "JsonVariant.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 class JsonArray : public JsonVariant {
  private:
@@ -54,16 +54,16 @@ class JsonArray : public JsonVariant {
 
   [[nodiscard]] Red::CString to_string() const override;
 
-  RTTI_IMPL_TYPEINFO(RedData::JsonArray);
+  RTTI_IMPL_TYPEINFO(RedData::Json::JsonArray);
   RTTI_IMPL_ALLOCATOR();
 };
 
-}  // namespace RedData
+}  // namespace RedData::Json
 
-RTTI_DEFINE_CLASS(RedData::JsonArray, {
+RTTI_DEFINE_CLASS(RedData::Json::JsonArray, {
   RTTI_ALIAS("RedData.Json.JsonArray");
 
-  RTTI_PARENT(RedData::JsonVariant);
+  RTTI_PARENT(RedData::Json::JsonVariant);
 
   RTTI_METHOD(get_size, "GetSize");
   RTTI_METHOD(get_item, "GetItem");

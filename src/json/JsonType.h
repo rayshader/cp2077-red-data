@@ -3,7 +3,7 @@
 
 #include <RedLib.hpp>
 
-namespace RedData {
+namespace RedData::Json {
 
 enum class JsonType {
   Undefined,
@@ -18,6 +18,6 @@ enum class JsonType {
 
 }
 
-RTTI_DEFINE_ENUM(RedData::JsonType);
+RTTI_DEFINE_ENUM(RedData::Json::JsonType);
 
 #endif  //REDDATA_JSONTYPE_H

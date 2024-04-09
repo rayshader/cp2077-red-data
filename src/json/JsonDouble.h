@@ -8,7 +8,7 @@
 
 #include "JsonVariant.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 class JsonDouble : public JsonVariant {
  private:
@@ -22,16 +22,16 @@ class JsonDouble : public JsonVariant {
 
   [[nodiscard]] Red::CString to_string() const override;
 
-  RTTI_IMPL_TYPEINFO(RedData::JsonDouble);
+  RTTI_IMPL_TYPEINFO(RedData::Json::JsonDouble);
   RTTI_IMPL_ALLOCATOR();
 };
 
-}  // namespace RedData
+}  // namespace RedData::Json
 
-RTTI_DEFINE_CLASS(RedData::JsonDouble, {
+RTTI_DEFINE_CLASS(RedData::Json::JsonDouble, {
   RTTI_ALIAS("RedData.Json.JsonDouble");
 
-  RTTI_PARENT(RedData::JsonVariant);
+  RTTI_PARENT(RedData::Json::JsonVariant);
 
   RTTI_METHOD(get_double, "GetDouble");
 

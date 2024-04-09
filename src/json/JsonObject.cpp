@@ -1,7 +1,7 @@
 #include "JsonObject.h"
 #include "JsonFactory.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 JsonObject::JsonObject() {
   type = JsonType::Object;
@@ -151,4 +151,4 @@ std::vector<std::string> JsonObject::get_string_keys() const {
   return keys;
 }
 
-}  // namespace RedData
+}  // namespace RedData::Json

@@ -7,7 +7,7 @@
 #include "JsonArray.h"
 #include "JsonVariant.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 class JsonObject : public JsonVariant {
  private:
@@ -46,16 +46,16 @@ class JsonObject : public JsonVariant {
 
   [[nodiscard]] std::vector<std::string> get_string_keys() const;
 
-  RTTI_IMPL_TYPEINFO(RedData::JsonObject);
+  RTTI_IMPL_TYPEINFO(RedData::Json::JsonObject);
   RTTI_IMPL_ALLOCATOR();
 };
 
-}  // namespace RedData
+}  // namespace RedData::Json
 
-RTTI_DEFINE_CLASS(RedData::JsonObject, {
+RTTI_DEFINE_CLASS(RedData::Json::JsonObject, {
   RTTI_ALIAS("RedData.Json.JsonObject");
 
-  RTTI_PARENT(RedData::JsonVariant);
+  RTTI_PARENT(RedData::Json::JsonVariant);
 
   RTTI_METHOD(get_keys, "GetKeys");
   RTTI_METHOD(get_values, "GetValues");

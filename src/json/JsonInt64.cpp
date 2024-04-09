@@ -1,6 +1,6 @@
 #include "JsonInt64.h"
 
-namespace RedData {
+namespace RedData::Json {
 
 JsonInt64::JsonInt64() : value(0) {
   type = JsonType::Int64;
@@ -18,4 +18,4 @@ Red::CString JsonInt64::to_string() const {
   return std::to_string(value);
 }
 
-}  // namespace RedData
+}  // namespace RedData::Json
