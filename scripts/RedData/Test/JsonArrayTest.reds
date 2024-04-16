@@ -1,3 +1,5 @@
+import RedData.Json.*
+
 public class JsonArrayTest extends JsonBaseTest {
 
   public func Init() {

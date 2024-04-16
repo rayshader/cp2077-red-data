@@ -1,3 +1,5 @@
+import RedData.Json.*
+
 public abstract class JsonBaseTest extends BaseTest {
 
   protected func ExpectJsonKeyNull(from: String, obj: wref<JsonObject>, key: String) -> Void {

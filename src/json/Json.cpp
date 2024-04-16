@@ -99,4 +99,4 @@ void parse_array(const simdjson::dom::array& p_array,
 
 }  // namespace RedData::Json
 
-RTTI_DEFINE_GLOBALS({ RTTI_FUNCTION(RedData::Json::parse_json, "ParseJson"); });
+RTTI_DEFINE_GLOBALS({ RTTI_FUNCTION(RedData::Json::parse_json, "RedData.Json.ParseJson"); });
