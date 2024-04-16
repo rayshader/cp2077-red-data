@@ -32,7 +32,7 @@ public class JsonTest extends JsonBaseTest {
     this.ExpectJsonKeyUnicodeString("$.pangrams.Arabic", pangrams, "Arabic", "صِف خَلقَ خَودِ كَمِثلِ الشَمسِ إِذ بَزَغَت — يَحظى الضَجيعُ بِها نَجلاءَ مِعطارِ (A poem by Al Farāhīdi)");
     this.ExpectJsonKeyUnicodeString("$.pangrams.Hindi", pangrams, "Hindi", "ऋषियों को सताने वाले दुष्ट राक्षसों के राजा रावण का सर्वनाश करने वाले विष्णुवतार भगवान श्रीराम, अयोध्या के महाराज दशरथ के बड़े सपुत्र थे।");
     this.ExpectJsonKeyUnicodeString("$.pangrams.Japanese", pangrams, "Japanese", "いろはにほへと ちりぬるを わかよたれそ つねならむ うゐのおくやま けふこえて あさきゆめみし ゑひもせす（ん）");
-    this.ExpectJsonKeyUnicodeString("£.pangrams.Latin", pangrams, "Latin", "Sic fugiens, dux, zelotypos, quam Karus haberis.");
+    this.ExpectJsonKeyUnicodeString("$.pangrams.Latin", pangrams, "Latin", "Sic fugiens, dux, zelotypos, quam Karus haberis.");
     let random = json.GetKey("random") as JsonArray;
 
     pass = this.ExpectBool("$.random === [...]", random.IsArray(), true);
