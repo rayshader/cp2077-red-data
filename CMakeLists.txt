@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(RedData VERSION 0.1.0)
+project(RedData VERSION 0.2.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
@@ -70,7 +70,7 @@ include(FetchContent)
 FetchContent_Declare(
         simdjson
         GIT_REPOSITORY https://github.com/simdjson/simdjson.git
-        GIT_TAG  tags/v3.7.0
+        GIT_TAG  tags/v3.9.1
         GIT_SHALLOW TRUE)
 
 FetchContent_MakeAvailable(simdjson)
