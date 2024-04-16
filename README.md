@@ -15,7 +15,7 @@ supports Json for now. It can be used with Redscript and CET.
 
 ## Installation
 1. Install requirements:
-  - [RED4ext] v1.23.0+
+  - [RED4ext] v1.24.0+
 2. Extract the [latest archive] into the Cyberpunk 2077 directory.
 
 ## Usage
