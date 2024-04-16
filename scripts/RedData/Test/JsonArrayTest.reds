@@ -2,7 +2,7 @@ import RedData.Json.*
 
 public class JsonArrayTest extends JsonBaseTest {
 
-  public func Init() {
+  public func Create() {
     this.m_modName = "RedData";
     this.m_name = "JsonArray";
   }

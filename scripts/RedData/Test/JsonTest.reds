@@ -3,7 +3,7 @@ import RedData.Json.*
 public class JsonTest extends JsonBaseTest {
   private let m_json: String = "{\"name\":\"FileSystemTest\",\"version\":1,\"isJson\":true,\"delta\":0.016,\"pangrams\":{\"Arabic\":\"صِف خَلقَ خَودِ كَمِثلِ الشَمسِ إِذ بَزَغَت — يَحظى الضَجيعُ بِها نَجلاءَ مِعطارِ (A poem by Al Farāhīdi)\",\"Hindi\":\"ऋषियों को सताने वाले दुष्ट राक्षसों के राजा रावण का सर्वनाश करने वाले विष्णुवतार भगवान श्रीराम, अयोध्या के महाराज दशरथ के बड़े सपुत्र थे।\",\"Japanese\":\"いろはにほへと ちりぬるを わかよたれそ つねならむ うゐのおくやま けふこえて あさきゆめみし ゑひもせす（ん）\",\"Latin\":\"Sic fugiens, dux, zelotypos, quam Karus haberis.\"},\"random\":[true,42,13.37,\"Weird\",{\"object\":null},[\"array\"]]}";
 
-  public func Init() {
+  public func Create() {
     this.m_modName = "RedData";
     this.m_name = "Json";
   }

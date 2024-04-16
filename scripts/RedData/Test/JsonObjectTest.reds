@@ -2,7 +2,7 @@ import RedData.Json.*
 
 public class JsonObjectTest extends JsonBaseTest {
 
-  public func Init() {
+  public func Create() {
     this.m_modName = "RedData";
     this.m_name = "JsonObject";
   }
