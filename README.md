@@ -20,6 +20,12 @@ supports Json for now. It can be used with Redscript and CET.
 
 ## Usage
 
+All Json features are defined in module `RedData.Json`. You need to import it 
+with:
+```swift
+import RedData.Json.*
+``` 
+
 ### Parse Json
 > ParseJson(text: String) -> ref&lt;JsonVariant&gt;
 

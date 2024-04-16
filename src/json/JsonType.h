@@ -18,6 +18,6 @@ enum class JsonType {
 
 }
 
-RTTI_DEFINE_ENUM(RedData::Json::JsonType);
+RTTI_DEFINE_ENUM(RedData::Json::JsonType, "RedData.Json.JsonType")
 
 #endif  //REDDATA_JSONTYPE_H

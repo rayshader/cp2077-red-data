@@ -18,7 +18,10 @@ class JsonNull : public JsonVariant {
 
 }  // namespace RedData::Json
 
-RTTI_DEFINE_CLASS(RedData::Json::JsonNull,
-                  { RTTI_PARENT(RedData::Json::JsonVariant); });
+RTTI_DEFINE_CLASS(RedData::Json::JsonNull, {
+  RTTI_ALIAS("RedData.Json.JsonNull");
+
+  RTTI_PARENT(RedData::Json::JsonVariant);
+});
 
 #endif  //REDDATA_JSONNULL_H
