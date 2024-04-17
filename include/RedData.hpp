@@ -5,8 +5,6 @@
 
 #include "Json/Json.hpp"
 
-#define HAS_REDDATA
-
 namespace RedData {
 
 inline bool IsDetected() {
