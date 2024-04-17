@@ -3,7 +3,9 @@
 
 #include <RedLib.hpp>
 
-#include "src/Json.hpp"
+#include "Json/Json.hpp"
+
+#define HAS_REDDATA
 
 namespace RedData {
 
