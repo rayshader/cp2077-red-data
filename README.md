@@ -14,25 +14,49 @@ This header-only library provides an API wrapper for [RedData] plugin.
 - [RED4ext.SDK]
 - [RedLib]
 
+## Installation
+
+1. Clone this branch as a submodule in your project:
+```shell
+git clone submodule add -b api https://github.com/rayshader/cp2077-red-data deps/RedData
+```
+2. Add dependency in CMake:
+```cmake
+add_subdirectory(deps/RedData)
+```
+
+It will define the following macro when it is well configured:
+```cpp
+#ifdef HAS_REDDATA
+// ...
+#endif
+```
+
 ## Usage
 
-API is defined in namespace `RedData`.
+Include this library using:
+```cpp
+#include <RedData.hpp>
+```
+
+API is defined in namespace `RedData` and `RedData::Json`.
 
 You can test whether plugin is installed/detected in-game using:
 ```cpp
 bool isDetected = RedData::IsDetected();
 ```
 
-This API is a mirror of redscript declarations. You can also directly test 
-whether an instance is defined using `operator bool()` such as:
+This API is a mirror of redscript declarations.
+
+You can test whether an instance is defined using `operator bool()` such as:
 ```cpp
 RedData::Json::JsonVariant json;
 
-if (!json) {
-    // Handle is null.
-    return;
+if (json) {
+  // Handle can be used.
+} else {
+  // Handle is null.
 }
-// Use it...
 ```
 
 You can get raw handle with:
