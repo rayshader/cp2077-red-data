@@ -18,6 +18,11 @@ supports Json for now. It can be used with Redscript and CET.
   - [RED4ext] v1.24.0+
 2. Extract the [latest archive] into the Cyberpunk 2077 directory.
 
+## API wrapper
+
+This plugin can be used when writing a RED4ext plugin with RedLib. You can 
+find a C++ API wrapper in [branch api].
+
 ## Usage
 
 All Json features are defined in module `RedData.Json`. You need to import it 
@@ -282,3 +287,4 @@ node bundle.mjs
 [latest archive]: https://github.com/rayshader/cp2077-red-data/releases/latest
 [Codeware]: https://github.com/psiberx/cp2077-codeware/wiki#lifecycle
 [examples/]: https://github.com/rayshader/cp2077-red-data/tree/master/examples
+[branch api]: https://github.com/rayshader/cp2077-red-data/tree/api
