@@ -16,8 +16,12 @@ public class JsonTest extends JsonBaseTest {
 
   private cb func Test_ParseJson_Valid() {
     let json = ParseJson(this.m_json) as JsonObject;
+    let pass = this.ExpectBool("Json is valid", IsDefined(json), true);
 
-    this.ExpectBool("Json is valid", IsDefined(json), true);
+    if !pass {
+      LogChannel(n"Error", "/!\\ Failed to parse Json /!\\");
+      return;
+    }
     this.ExpectJsonKeyString("$.name == 'FileSystemTest'", json, "name", "FileSystemTest");
     this.ExpectJsonKeyInt64("$.version == 1", json, "version", 1);
     this.ExpectJsonKeyBool("$.isJson == true", json, "isJson", true);

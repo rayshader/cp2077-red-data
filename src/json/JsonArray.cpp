@@ -85,6 +85,13 @@ int64_t JsonArray::get_item_int64(uint32_t p_index) const {
   return items[p_index]->get_int64();
 }
 
+uint64_t JsonArray::get_item_uint64(uint32_t p_index) const {
+  if (p_index >= items.size) {
+    return {};
+  }
+  return items[p_index]->get_uint64();
+}
+
 double JsonArray::get_item_double(uint32_t p_index) const {
   if (p_index >= items.size) {
     return {};
@@ -111,6 +118,10 @@ void JsonArray::set_item_int64(uint32_t p_index, int64_t p_value) {
   set_item(p_index, JsonFactory::CreateInt64(p_value));
 }
 
+void JsonArray::set_item_uint64(uint32_t p_index, uint64_t p_value) {
+  set_item(p_index, JsonFactory::CreateUint64(p_value));
+}
+
 void JsonArray::set_item_double(uint32_t p_index, double p_value) {
   set_item(p_index, JsonFactory::CreateDouble(p_value));
 }
@@ -131,6 +142,10 @@ void JsonArray::add_item_int64(int64_t p_item) {
   items.PushBack(JsonFactory::CreateInt64(p_item));
 }
 
+void JsonArray::add_item_uint64(uint64_t p_item) {
+  items.PushBack(JsonFactory::CreateUint64(p_item));
+}
+
 void JsonArray::add_item_double(double p_item) {
   items.PushBack(JsonFactory::CreateDouble(p_item));
 }
@@ -149,6 +164,10 @@ void JsonArray::insert_item_bool(uint32_t p_index, bool p_item) {
 
 void JsonArray::insert_item_int64(uint32_t p_index, int64_t p_item) {
   insert_item(p_index, JsonFactory::CreateInt64(p_item));
+}
+
+void JsonArray::insert_item_uint64(uint32_t p_index, uint64_t p_item) {
+  insert_item(p_index, JsonFactory::CreateUint64(p_item));
 }
 
 void JsonArray::insert_item_double(uint32_t p_index, double p_item) {

@@ -71,6 +71,7 @@ if !json.IsObject() {
 >
 > IsBool() -> Bool  
 > IsInt64() -> Bool  
+> IsUint64() -> Bool  
 > IsDouble() -> Bool  
 > IsString() -> Bool
 >
@@ -100,12 +101,14 @@ LogChannel(n"Info", json.ToString());
 >
 > GetKeyBool(key: String) -> Bool  
 > GetKeyInt64(key: String) -> Int64  
+> GetKeyUint64(key: String) -> Uint64  
 > GetKeyDouble(key: String) -> Double  
 > GetKeyString(key: String) -> String
 >
 > SetKeyNull(key: String) -> Void  
 > SetKeyBool(key: String, value: Bool) -> Void  
 > SetKeyInt64(key: String, value: Int64) -> Void  
+> SetKeyUint64(key: String, value: Uint64) -> Void  
 > SetKeyDouble(key: String, value: Double) -> Void  
 > SetKeyString(key: String, value: String) -> Void
 > 
@@ -167,24 +170,28 @@ let hasUnknown = obj.HasKey("unknown");
 > 
 > GetItemBool(index: Uint32) -> Bool  
 > GetItemInt64(index: Uint32) -> Int64  
+> GetItemUint64(index: Uint32) -> Uint64  
 > GetItemDouble(index: Uint32) -> Double  
 > GetItemString(index: Uint32) -> String
 >
 > SetItemNull(index: Uint32) -> Void  
 > SetItemBool(index: Uint32, value: Bool) -> Void  
 > SetItemInt64(index: Uint32, value: Int64) -> Void  
+> SetItemUint64(index: Uint32, value: Uint64) -> Void  
 > SetItemDouble(index: Uint32, value: Double) -> Void  
 > SetItemString(index: Uint32, value: String) -> Void
 > 
 > AddItemNull() -> Void  
 > AddItemBool(value: Bool) -> Void  
 > AddItemInt64(value: Int64) -> Void  
+> AddItemUint64(value: Uint64) -> Void  
 > AddItemDouble(value: Double) -> Void  
 > AddItemString(value: String) -> Void
 > 
 > InsertItemNull(index: Uint32) -> Void  
 > InsertItemBool(index: Uint32, value: Bool) -> Void  
 > InsertItemInt64(index: Uint32, value: Int64) -> Void  
+> InsertItemUint64(index: Uint32, value: Uint64) -> Void  
 > InsertItemDouble(index: Uint32, value: Double) -> Void  
 > InsertItemString(index: Uint32, value: String) -> Void
 > 

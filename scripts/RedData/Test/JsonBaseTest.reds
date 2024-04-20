@@ -44,6 +44,20 @@ public abstract class JsonBaseTest extends BaseTest {
     }
   }
 
+  protected func ExpectJsonKeyUint64(from: String, obj: wref<JsonObject>, key: String, expected: Uint64) -> Void {
+    if !obj.HasKey(key) {
+      this.LogFail(from, "<undefined>", s"\(expected)");
+      return;
+    }
+    let actual = obj.GetKeyUint64(key);
+
+    if !Equals(actual, expected) {
+      this.LogFail(from, s"\(actual)", s"\(expected)");
+    } else {
+      this.LogPass(from);
+    }
+  }
+
   protected func ExpectJsonKeyDouble(from: String, obj: wref<JsonObject>, key: String, expected: Double) -> Void {
     if !obj.HasKey(key) {
       this.LogFail(from, "<undefined>", s"\(expected)");

@@ -37,6 +37,10 @@ bool JsonVariant::is_int64() const {
   return type == JsonType::Int64;
 }
 
+bool JsonVariant::is_uint64() const {
+  return type == JsonType::Uint64;
+}
+
 bool JsonVariant::is_double() const {
   return type == JsonType::Double;
 }
@@ -58,6 +62,10 @@ bool JsonVariant::get_bool() const {
 }
 
 int64_t JsonVariant::get_int64() const {
+  return 0;
+}
+
+uint64_t JsonVariant::get_uint64() const {
   return 0;
 }
 

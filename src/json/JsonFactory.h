@@ -10,6 +10,7 @@
 #include "JsonBool.h"
 #include "JsonDouble.h"
 #include "JsonInt64.h"
+#include "JsonUint64.h"
 #include "JsonNull.h"
 #include "JsonObject.h"
 #include "JsonString.h"
@@ -43,6 +44,15 @@ class JsonFactory {
 
   inline static Red::Handle<JsonInt64> CreateInt64(int64_t p_value) {
     return Create<int64_t, JsonInt64>(p_value);
+  }
+
+  inline static Red::Handle<JsonUint64> CreateUint64(
+    const simdjson::dom::element& p_value) {
+    return Create<uint64_t, JsonUint64>(p_value);
+  }
+
+  inline static Red::Handle<JsonUint64> CreateUint64(uint64_t p_value) {
+    return Create<uint64_t, JsonUint64>(p_value);
   }
 
   inline static Red::Handle<JsonDouble> CreateDouble(

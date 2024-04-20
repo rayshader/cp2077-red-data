@@ -13,6 +13,7 @@ set(INC_FILES
         src/json/JsonNull.h
         src/json/JsonBool.h
         src/json/JsonInt64.h
+        src/json/JsonUint64.h
         src/json/JsonDouble.h
         src/json/JsonString.h
         src/json/JsonArray.h
@@ -28,6 +29,7 @@ set(SRC_FILES
         src/json/JsonNull.cpp
         src/json/JsonBool.cpp
         src/json/JsonInt64.cpp
+        src/json/JsonUint64.cpp
         src/json/JsonDouble.cpp
         src/json/JsonString.cpp
         src/json/JsonArray.cpp

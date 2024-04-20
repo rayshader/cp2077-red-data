@@ -22,6 +22,7 @@ class JsonVariant : public Red::IScriptable {
   [[nodiscard]] bool is_null() const;
   [[nodiscard]] bool is_bool() const;
   [[nodiscard]] bool is_int64() const;
+  [[nodiscard]] bool is_uint64() const;
   [[nodiscard]] bool is_double() const;
   [[nodiscard]] bool is_string() const;
   [[nodiscard]] bool is_array() const;
@@ -29,6 +30,7 @@ class JsonVariant : public Red::IScriptable {
 
   [[nodiscard]] virtual bool get_bool() const;
   [[nodiscard]] virtual int64_t get_int64() const;
+  [[nodiscard]] virtual uint64_t get_uint64() const;
   [[nodiscard]] virtual double get_double() const;
   [[nodiscard]] virtual Red::CString get_string() const;
 
@@ -51,6 +53,7 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonVariant, {
   RTTI_METHOD(is_null, "IsNull");
   RTTI_METHOD(is_bool, "IsBool");
   RTTI_METHOD(is_int64, "IsInt64");
+  RTTI_METHOD(is_uint64, "IsUint64");
   RTTI_METHOD(is_double, "IsDouble");
   RTTI_METHOD(is_string, "IsString");
   RTTI_METHOD(is_array, "IsArray");
@@ -58,6 +61,7 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonVariant, {
 
   RTTI_METHOD(get_bool, "GetBool");
   RTTI_METHOD(get_int64, "GetInt64");
+  RTTI_METHOD(get_uint64, "GetUint64");
   RTTI_METHOD(get_double, "GetDouble");
   RTTI_METHOD(get_string, "GetString");
 

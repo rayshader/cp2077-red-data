@@ -31,12 +31,14 @@ class JsonObject : public JsonVariant {
 
   [[nodiscard]] bool get_key_bool(const Red::CString& p_key) const;
   [[nodiscard]] int64_t get_key_int64(const Red::CString& p_key) const;
+  [[nodiscard]] uint64_t get_key_uint64(const Red::CString& p_key) const;
   [[nodiscard]] double get_key_double(const Red::CString& p_key) const;
   [[nodiscard]] Red::CString get_key_string(const Red::CString& p_key) const;
 
   void set_key_null(const Red::CString& p_key);
   void set_key_bool(const Red::CString& p_key, bool p_value);
   void set_key_int64(const Red::CString& p_key, int64_t p_value);
+  void set_key_uint64(const Red::CString& p_key, uint64_t p_value);
   void set_key_double(const Red::CString& p_key, double p_value);
   void set_key_string(const Red::CString& p_key, const Red::CString& p_value);
 
@@ -67,12 +69,14 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonObject, {
 
   RTTI_METHOD(get_key_bool, "GetKeyBool");
   RTTI_METHOD(get_key_int64, "GetKeyInt64");
+  RTTI_METHOD(get_key_uint64, "GetKeyUint64");
   RTTI_METHOD(get_key_double, "GetKeyDouble");
   RTTI_METHOD(get_key_string, "GetKeyString");
 
   RTTI_METHOD(set_key_null, "SetKeyNull");
   RTTI_METHOD(set_key_bool, "SetKeyBool");
   RTTI_METHOD(set_key_int64, "SetKeyInt64");
+  RTTI_METHOD(set_key_uint64, "SetKeyUint64");
   RTTI_METHOD(set_key_double, "SetKeyDouble");
   RTTI_METHOD(set_key_string, "SetKeyString");
 

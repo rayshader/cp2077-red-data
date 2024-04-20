@@ -42,6 +42,8 @@ void parse_object(const simdjson::dom::object& p_object,
       p_root->set_key_bool(key, el_value);
     } else if (el_value.is_int64()) {
       p_root->set_key_int64(key, el_value);
+    } else if (el_value.is_uint64()) {
+      p_root->set_key_uint64(key, el_value);
     } else if (el_value.is_double()) {
       p_root->set_key_double(key, el_value);
     } else if (el_value.is_string()) {
@@ -73,6 +75,8 @@ void parse_array(const simdjson::dom::array& p_array,
       p_root->add_item_bool(item);
     } else if (item.is_int64()) {
       p_root->add_item_int64(item);
+    } else if (item.is_uint64()) {
+      p_root->add_item_uint64(item);
     } else if (item.is_double()) {
       p_root->add_item_double(item);
     } else if (item.is_string()) {

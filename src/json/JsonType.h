@@ -10,6 +10,7 @@ enum class JsonType {
   Null,
   Bool,
   Int64,
+  Uint64,
   Double,
   String,
   Array,

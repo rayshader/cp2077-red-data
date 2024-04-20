@@ -95,6 +95,15 @@ int64_t JsonObject::get_key_int64(const Red::CString& p_key) const {
   return fields.at(key)->get_int64();
 }
 
+uint64_t JsonObject::get_key_uint64(const Red::CString& p_key) const {
+  std::string key = p_key.c_str();
+
+  if (!fields.contains(key)) {
+    return {};
+  }
+  return fields.at(key)->get_uint64();
+}
+
 double JsonObject::get_key_double(const Red::CString& p_key) const {
   std::string key = p_key.c_str();
 
@@ -123,6 +132,10 @@ void JsonObject::set_key_bool(const Red::CString& p_key, bool p_value) {
 
 void JsonObject::set_key_int64(const Red::CString& p_key, int64_t p_value) {
   set_key(p_key, JsonFactory::CreateInt64(p_value));
+}
+
+void JsonObject::set_key_uint64(const Red::CString& p_key, uint64_t p_value) {
+  set_key(p_key, JsonFactory::CreateUint64(p_value));
 }
 
 void JsonObject::set_key_double(const Red::CString& p_key, double p_value) {

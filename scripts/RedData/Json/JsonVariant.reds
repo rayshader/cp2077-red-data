@@ -4,6 +4,7 @@ public abstract native class JsonVariant {
   public native func IsNull() -> Bool;
   public native func IsBool() -> Bool;
   public native func IsInt64() -> Bool;
+  public native func IsUint64() -> Bool;
   public native func IsDouble() -> Bool;
   public native func IsString() -> Bool;
   public native func IsArray() -> Bool;
@@ -11,6 +12,7 @@ public abstract native class JsonVariant {
 
   public native func GetBool() -> Bool;
   public native func GetInt64() -> Int64;
+  public native func GetUint64() -> Uint64;
   public native func GetDouble() -> Double;
   public native func GetString() -> String;
 
