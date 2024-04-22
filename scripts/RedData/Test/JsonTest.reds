@@ -130,7 +130,7 @@ public class JsonTest extends JsonBaseTest {
   }
 
   private cb func Test_FromJson_Invalid() {
-    let json = ParseJson("{key: value}");
+    let json = ParseJson("{key: value}") as JsonObject;
     let pass = this.ExpectBool("Parse Json fails", IsDefined(json), false);
 
     if !pass {
@@ -143,7 +143,7 @@ public class JsonTest extends JsonBaseTest {
   }
 
   private cb func Test_FromJson_Valid() {
-    let json = ParseJson(this.m_jsonDto);
+    let json = ParseJson(this.m_jsonDto) as JsonObject;
     let pass = this.ExpectBool("Parse Json", IsDefined(json), true);
 
     if !pass {
@@ -179,7 +179,7 @@ public class JsonTest extends JsonBaseTest {
   }
 
   private cb func Test_FromJson_Nested_Valid() {
-    let json = ParseJson(this.m_jsonNestedDto);
+    let json = ParseJson(this.m_jsonNestedDto) as JsonObject;
     let pass = this.ExpectBool("Parse Json", IsDefined(json), true);
 
     if !pass {
