@@ -101,4 +101,18 @@ public abstract class JsonBaseTest extends BaseTest {
     }
   }
 
+  protected func ExpectJsonKeyCName(from: String, obj: wref<JsonObject>, key: String, expected: CName) -> Void {
+    if !obj.HasKey(key) {
+      this.LogFail(from, "<undefined>", s"\(expected)");
+      return;
+    }
+    let actual = obj.GetKeyString(key);
+
+    if !Equals(StringToName(actual), expected) {
+      this.LogFail(from, s"n'\(actual)'", s"n'\(expected)'");
+    } else {
+      this.LogPass(from);
+    }
+  }
+
 }

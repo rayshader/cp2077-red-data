@@ -1,11 +1,74 @@
 import RedData.Json.*
 
+public class TypesDto {
+  let pBool: Bool;
+
+  let pInt8: Int8;
+  let pInt16: Int16;
+  let pInt32: Int32;
+  let pInt64: Int64;
+
+  let pUint8: Uint8;
+  let pUint16: Uint16;
+  let pUint32: Uint32;
+  let pUint64: Uint64;
+
+  let pFloat: Float;
+  let pDouble: Double;
+
+  let pString: String;
+  let pCName: CName;
+  let pResRef: ResRef;
+  let pTweakDBID: TweakDBID;
+}
+
+public class SessionDto {
+  let id: Uint64;
+  let createdAt: Int32;
+  let user: ref<UserDto>;
+  let empty: ref<UserDto>;
+}
+
+public class UserDto {
+  let id: Uint64;
+  let username: String;
+  let isAdmin: Bool;
+  let words: array<String>;
+  let i8: array<Int8>;
+  let names: array<CName>;
+}
+
 public class JsonTest extends JsonBaseTest {
   private let m_json: String = "{\"name\":\"FileSystemTest\",\"version\":1,\"isJson\":true,\"delta\":0.016,\"pangrams\":{\"Arabic\":\"صِف خَلقَ خَودِ كَمِثلِ الشَمسِ إِذ بَزَغَت — يَحظى الضَجيعُ بِها نَجلاءَ مِعطارِ (A poem by Al Farāhīdi)\",\"Hindi\":\"ऋषियों को सताने वाले दुष्ट राक्षसों के राजा रावण का सर्वनाश करने वाले विष्णुवतार भगवान श्रीराम, अयोध्या के महाराज दशरथ के बड़े सपुत्र थे।\",\"Japanese\":\"いろはにほへと ちりぬるを わかよたれそ つねならむ うゐのおくやま けふこえて あさきゆめみし ゑひもせす（ん）\",\"Latin\":\"Sic fugiens, dux, zelotypos, quam Karus haberis.\"},\"random\":[true,42,13.37,\"Weird\",{\"object\":null},[\"array\"]]}";
+  private let m_jsonDto: String;
+  private let m_jsonNestedDto: String;
 
   public func Create() {
     this.m_modName = "RedData";
     this.m_name = "Json";
+  }
+
+  public func Setup() {
+    this.m_jsonDto = "{";
+    this.m_jsonDto +=   "\"pBool\": true,";
+    this.m_jsonDto +=   "\"pInt8\": 127,\"pInt16\": 32767,\"pInt32\": 2147483647,\"pInt64\": 9223372036854775807,";
+    this.m_jsonDto +=   "\"pUint8\": 255,\"pUint16\": 65535,\"pUint32\": 4294967295,\"pUint64\": 18446744073709551615,";
+    this.m_jsonDto +=   "\"pFloat\": 3.141592,\"pDouble\": 3.141592653589793,";
+    this.m_jsonDto +=   "\"pString\": \"Hello world!\",\"pCName\": \"VehicleObject\",\"pResRef\": \"base\\\\anim_cooked.cookedanims\",\"pTweakDBID\": \"Items.RequiredItemStats\"";
+    this.m_jsonDto += "}";
+
+    this.m_jsonNestedDto = "{";
+    this.m_jsonNestedDto +=   "\"id\": 1337,";
+    this.m_jsonNestedDto +=   "\"createdAt\": 1713646202,";
+    this.m_jsonNestedDto +=   "\"user\": {";
+    this.m_jsonNestedDto +=     "\"id\": 42,";
+    this.m_jsonNestedDto +=     "\"username\": \"NightCity\",";
+    this.m_jsonNestedDto +=     "\"isAdmin\": true,";
+    this.m_jsonNestedDto +=     "\"words\": [\"Hello\",\"world\",\"!\"],";
+    this.m_jsonNestedDto +=     "\"i8\": [-128,-1,0,1,127],";
+    this.m_jsonNestedDto +=     "\"names\": [\"VehicleObject\",\"PlayerPuppet\",\"WeaponObject\"]";
+    this.m_jsonNestedDto +=   "}";
+    this.m_jsonNestedDto += "}";
   }
 
   private cb func Test_ParseJson_Invalid() {
@@ -64,6 +127,234 @@ public class JsonTest extends JsonBaseTest {
       return;
     }
     this.ExpectString("$.random[5][0]", array.GetItemString(0u), "array");
+  }
+
+  private cb func Test_FromJson_Invalid() {
+    let json = ParseJson("{key: value}");
+    let pass = this.ExpectBool("Parse Json fails", IsDefined(json), false);
+
+    if !pass {
+      LogChannel(n"Error", "/!\\ Parsing Json must fails /!\\");
+      return;
+    }
+    let object = FromJson(json, n"TypesDto") as TypesDto;
+
+    this.ExpectBool("Variant is not defined", IsDefined(object), false);
+  }
+
+  private cb func Test_FromJson_Valid() {
+    let json = ParseJson(this.m_jsonDto);
+    let pass = this.ExpectBool("Parse Json", IsDefined(json), true);
+
+    if !pass {
+      LogChannel(n"Error", "/!\\ Failed to parse Json /!\\");
+      return;
+    }
+    let dto = FromJson(json, n"TypesDto") as TypesDto;
+
+    pass = this.ExpectBool("TypesDto is defined", IsDefined(dto), true);
+    if !pass {
+      LogChannel(n"Error", s"Failed to transform Json to Dto!");
+      return;
+    }
+    this.ExpectBool("dto.pBool == true", dto.pBool, true);
+
+    this.ExpectInt8("dto.pInt8 == 127", dto.pInt8, Cast<Int8>(127));
+    this.ExpectInt16("dto.pInt16 == 32767", dto.pInt16, Cast<Int16>(32767));
+    this.ExpectInt32("dto.pInt32 == 2147483647", dto.pInt32, 2147483647);
+    this.ExpectInt64("dto.pInt64 == 9223372036854775807", dto.pInt64, 9223372036854775807l);
+
+    this.ExpectUint8("dto.pUint8 == 255", dto.pUint8, Cast<Uint8>(255u));
+    this.ExpectUint16("dto.pUint16 == 65535", dto.pUint16, Cast<Uint16>(65535u));
+    this.ExpectUint32("dto.pUint32 == 4294967295", dto.pUint32, 4294967295u);
+    this.ExpectUint64("dto.pUint64 == 18446744073709551615", dto.pUint64, 18446744073709551615ul);
+
+    this.ExpectFloat("dto.pFloat == 3.141592", dto.pFloat, 3.141592);
+    this.ExpectDouble("dto.pDouble == 3.141592653589793", dto.pDouble, 3.141592653589793d);
+
+    this.ExpectString("dto.pString == 'Hello world!'", dto.pString, "Hello world!");
+    this.ExpectCName("dto.pCName == n'VehicleObject'", dto.pCName, n"VehicleObject");
+    this.ExpectResRef("dto.pResRef == r'base\\anim_cooked.cookedanims'", dto.pResRef, r"base\\anim_cooked.cookedanims"); // Fails
+    this.ExpectTweakDBID("dto.pTweakDBID == t'Items.RequiredItemStats'", dto.pTweakDBID, t"Items.RequiredItemStats");
+  }
+
+  private cb func Test_FromJson_Nested_Valid() {
+    let json = ParseJson(this.m_jsonNestedDto);
+    let pass = this.ExpectBool("Parse Json", IsDefined(json), true);
+
+    if !pass {
+      LogChannel(n"Error", "/!\\ Failed to parse Json /!\\");
+      return;
+    }
+    let session = FromJson(json, n"SessionDto") as SessionDto;
+
+    pass = this.ExpectBool("session == {...}", IsDefined(session), true);
+    if !pass {
+      LogChannel(n"Error", s"Failed to transform Json to Dto!");
+      return;
+    }
+    this.ExpectUint64("session.id == 1337", session.id, 1337ul);
+    this.ExpectInt32("session.createdAt == 1713646202", session.createdAt, 1713646202);
+    let empty = session.empty;
+
+    this.ExpectBool("session.empty == null", IsDefined(empty), false);
+    let user = session.user;
+
+    pass = this.ExpectBool("session.user == {...}", IsDefined(user), true);
+    if !pass {
+      LogChannel(n"Error", s"Failed to transform Json to Dto!");
+      return;
+    }
+    this.ExpectUint64("session.user.id == 42", user.id, 42ul);
+    this.ExpectString("session.user.username == 'NightCity'", user.username, "NightCity");
+    this.ExpectBool("session.user.isAdmin == true", user.isAdmin, true);
+
+    this.ExpectInt32("session.user.words.length == 3", ArraySize(user.words), 3);
+    this.ExpectString("session.user.words[0] == 'Hello'", user.words[0], "Hello");
+    this.ExpectString("session.user.words[1] == 'world'", user.words[1], "world");
+    this.ExpectString("session.user.words[2] == '!'", user.words[2], "!");
+
+    this.ExpectInt32("session.user.i8.length == 5", ArraySize(user.i8), 5);
+    this.ExpectInt8("session.user.i8[0] == -128", user.i8[0], Cast<Int8>(-128));
+    this.ExpectInt8("session.user.i8[1] == -1", user.i8[1], Cast<Int8>(-1));
+    this.ExpectInt8("session.user.i8[2] == 0", user.i8[2], Cast<Int8>(0));
+    this.ExpectInt8("session.user.i8[3] == 1", user.i8[3], Cast<Int8>(1));
+    this.ExpectInt8("session.user.i8[4] == 127", user.i8[4], Cast<Int8>(127));
+
+    this.ExpectInt32("session.user.names.length == 3", ArraySize(user.names), 3);
+    this.ExpectCName("session.user.names[0] == n'VehicleObject'", user.names[0], n"VehicleObject");
+    this.ExpectCName("session.user.names[1] == n'PlayerPuppet'", user.names[1], n"PlayerPuppet");
+    this.ExpectCName("session.user.names[2] == n'WeaponObject'", user.names[2], n"WeaponObject");
+  }
+
+  private cb func Test_ToJson_Invalid() {
+    let json = ToJson(null);
+
+    this.ExpectBool("To Json fails", IsDefined(json), false);
+  }
+
+  private cb func Test_ToJson_Valid() {
+    let types = new TypesDto();
+
+    types.pBool = true;
+    types.pInt8 = Cast<Int8>(127); types.pInt16 = Cast<Int16>(32767); types.pInt32 = 2147483647; types.pInt64 = 9223372036854775807l;
+    types.pUint8 = Cast<Uint8>(255u); types.pUint16 = Cast<Uint16>(65535u); types.pUint32 = 4294967295u; types.pUint64 = 18446744073709551615ul;
+    types.pFloat = 3.141592; types.pDouble = 3.141592653589793d;
+    types.pString = "Hello world!"; types.pCName = n"VehicleObject"; types.pResRef = r"base\\anim_cooked.cookedanims"; types.pTweakDBID = t"Items.RequiredItemStats";
+    let json = ToJson(types);
+    let pass = this.ExpectBool("To Json", IsDefined(json), true);
+
+    if !pass {
+      LogChannel(n"Error", "/!\\ Failed to transform to Json /!\\");
+      return;
+    }
+    pass = this.ExpectBool("$ == {...}", json.IsObject(), true);
+    if !pass {
+      LogChannel(n"Error", "/!\\ JsonObject is expected in schema /!\\");
+      return;
+    }
+    let obj = json as JsonObject;
+
+    this.ExpectJsonKeyBool("$.pBool == true", obj, "pBool", true);
+
+    this.ExpectJsonKeyInt64("$.pInt8 == 127", obj, "pInt8", 127);
+    this.ExpectJsonKeyInt64("$.pInt16 == 32767", obj, "pInt16", 32767);
+    this.ExpectJsonKeyInt64("$.pInt32 == 2147483647", obj, "pInt32", 2147483647);
+    this.ExpectJsonKeyInt64("$.pInt64 == 9223372036854775807", obj, "pInt64", 9223372036854775807l);
+
+    this.ExpectJsonKeyUint64("$.pUint8 == 255", obj, "pUint8", 255u);
+    this.ExpectJsonKeyUint64("$.pUint16 == 65535", obj, "pUint16", 65535u);
+    this.ExpectJsonKeyUint64("$.pUint32 == 4294967295", obj, "pUint32", 4294967295u);
+    this.ExpectJsonKeyUint64("$.pUint64 == 18446744073709551615", obj, "pUint64", 18446744073709551615ul);
+
+    this.ExpectJsonKeyDouble("$.pFloat == 3.141592", obj, "pFloat", 3.141592);
+    this.ExpectJsonKeyDouble("$.pDouble == 3.141592653589793", obj, "pDouble", 3.141592653589793d);
+
+    this.ExpectJsonKeyString("$.pString == 'Hello world!'", obj, "pString", "Hello world!");
+    this.ExpectJsonKeyCName("$.pCName == n'VehicleObject'", obj, "pCName", n"VehicleObject");
+    /* NOTE: cannot be transformed to Json, one way only.
+    this.ExpectJsonKeyResRef("$.pResRef == ''", obj, "pResRef", "");
+    this.ExpectJsonKeyTweakDBID("$.pTweakDBID == ''", obj, "pTweakDBID", "");
+    */
+  }
+
+  private cb func Test_ToJson_Nested_Valid() {
+    let session = new SessionDto();
+
+    session.id = 1337ul;
+    session.createdAt = 1713646202;
+    session.empty = null;
+    session.user = new UserDto();
+    session.user.id = 42ul;
+    session.user.username = "NightCity";
+    session.user.isAdmin = true;
+    session.user.words = ["Hello", "world", "!"];
+    session.user.i8 = [Cast<Int8>(-128), Cast<Int8>(-1), Cast<Int8>(0), Cast<Int8>(1), Cast<Int8>(127)];
+    session.user.names = [n"VehicleObject", n"PlayerPuppet", n"WeaponObject"];
+    let json = ToJson(session);
+    let pass = this.ExpectBool("To Json Nested", IsDefined(json), true);
+
+    if !pass {
+      LogChannel(n"Error", "/!\\ Failed to transform to Json /!\\");
+      return;
+    }
+    pass = this.ExpectBool("$ == {...}", json.IsObject(), true);
+    if !pass {
+      LogChannel(n"Error", "/!\\ JsonObject is expected in schema /!\\");
+      return;
+    }
+    let obj = json as JsonObject;
+
+    this.ExpectJsonKeyUint64("$.id == 1337", obj, "id", 1337ul);
+    this.ExpectJsonKeyInt64("$.createdAt == 1713646202", obj, "createdAt", 1713646202l);
+    let empty = json.GetKey("empty");
+
+    this.ExpectBool("$.empty == null", empty.IsNull(), true);
+    let user = json.GetKey("user") as JsonObject;
+
+    pass = this.ExpectBool("$.user == {...}", user.IsObject(), true);
+    if !pass {
+      LogChannel(n"Error", "/!\\ JsonObject is expected in schema /!\\");
+      return;
+    }
+    this.ExpectJsonKeyUint64("$.user.id == 42", user, "id", 42ul);
+    this.ExpectJsonKeyString("$.user.username == 'NightCity'", user, "username", "NightCity");
+    this.ExpectJsonKeyBool("$.user.isAdmin == true", user, "isAdmin", true);
+    let words = user.GetKey("words") as JsonArray;
+
+    pass = this.ExpectBool("$.user.words == [...]", words.IsArray(), true);
+    if !pass {
+      LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
+    } else {
+      this.ExpectUint32("$.user.words.length == 3", words.GetSize(), 3u);
+      this.ExpectString("$.user.words[0] == 'Hello'", words.GetItemString(0u), "Hello");
+      this.ExpectString("$.user.words[1] == 'world'", words.GetItemString(1u), "world");
+      this.ExpectString("$.user.words[2] == '!'", words.GetItemString(2u), "!");
+    }
+    let i8 = user.GetKey("i8") as JsonArray;
+
+    pass = this.ExpectBool("$.user.i8 == [...]", i8.IsArray(), true);
+    if !pass {
+      LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
+    } else {
+      this.ExpectUint32("$.user.i8.length == 5", i8.GetSize(), 5u);
+      this.ExpectInt64("$.user.i8[0] == -128", i8.GetItemInt64(0u), -128l);
+      this.ExpectInt64("$.user.i8[1] == -1", i8.GetItemInt64(1u), -1l);
+      this.ExpectInt64("$.user.i8[2] == 0", i8.GetItemInt64(2u), 0l);
+      this.ExpectInt64("$.user.i8[3] == 1", i8.GetItemInt64(3u), 1l);
+      this.ExpectInt64("$.user.i8[4] == 127", i8.GetItemInt64(4u), 127l);
+    }
+    let names = user.GetKey("names") as JsonArray;
+
+    pass = this.ExpectBool("$.user.names == [...]", names.IsArray(), true);
+    if !pass {
+      LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
+    } else {
+      this.ExpectUint32("$.user.names.length == 3", names.GetSize(), 3u);
+      this.ExpectString("$.user.names[0] == n'VehicleObject'", names.GetItemString(0u), "VehicleObject");
+      this.ExpectString("$.user.names[1] == n'PlayerPuppet'", names.GetItemString(1u), "PlayerPuppet");
+      this.ExpectString("$.user.names[2] == n'WeaponObject'", names.GetItemString(2u), "WeaponObject");
+    }
   }
 
 }

@@ -11,7 +11,7 @@ supports Json for now. It can be used with Redscript and CET.
 ## Compatibility
 - Cyberpunk 2077 v2.12
 - [Redscript] 0.5.18+
-- [Cyber Engine Tweaks] 1.31.0+
+- [Cyber Engine Tweaks] 1.32.0+
 
 ## Installation
 1. Install requirements:
@@ -219,6 +219,95 @@ let size: Uint32 = items.GetSize();
 
 > Note: arrays are iterated from 1 to N when using Lua. In this case, you must 
 > iterate from 0 to N - 1.
+
+### Json to DTO
+> FromJson(json: ref&lt;JsonObject&gt;, type: CName) -> ref&lt;IScriptable&gt;;
+
+You can create a class from Json. It will match properties of the class with 
+keys from Json data. The name of a property/key is case-sensitive.
+
+```swift
+public class MessageDto {
+  let id: Uint64;
+  let createdAt: Int32;
+  let author: ref<UserDto>;
+  let text: String;
+}
+
+public class UserDto {
+  let id: Uint64;
+  let firstName: String;
+  let lastName: String;
+  let permissions: array<String>;
+}
+
+let json = ParseJson("<Json data>") as JsonObject;
+let message = FromJson(json, n"MessageDto") as MessageDto;
+//                           ^
+//                           | CName of the class to format Json to.
+
+LogChannel(n"Info", s"text: \"\(message.text)\"");
+```
+
+This feature supports the following types:
+- `Bool`
+- `Int8`, `Int16`, `Int32`, `Int64`
+- `Uint8`, `Uint16`, `Uint32`, `Uint64`
+- `Float`, `Double`
+- `String`, `CName`, `ResRef`, `TweakDBID`
+- `ref<T>`, `array<T>`
+
+When property is:
+- a weak reference: the value is always set to `null`.
+- a strong reference: the value is set with a new instance built from the Json 
+data, or it fallbacks to `null`.
+- an array: the value is set with an array built from the 
+Json data.
+
+> [!NOTE]  
+> Type of array can be any of the supported types above, but it does not 
+> support arrays within arrays.
+
+### DTO to Json
+> ToJson(object: ref&lt;IScriptable&gt;) -> ref&lt;JsonObject&gt;;
+
+You can create Json data from a class. It will create a `JsonObject` based on 
+properties of the object.
+
+```swift
+// ...
+let message = new MessageDto();
+
+message.id = 42;
+message.createdAt = 1337;
+message.author = null;
+message.text = "Hello world!";
+let json = ToJson(message);
+
+LogChannel(n"Info", s"json: \(json.ToString())");
+// It should log:
+// {
+//   "id": 42,
+//   "createdAt": 1337,
+//   "author": null,
+//   "text": "Hello world!"
+// }
+```
+
+This feature supports the following types:
+- `Bool`
+- `Int8`, `Int16`, `Int32`, `Int64`
+- `Uint8`, `Uint16`, `Uint32`, `Uint64`
+- `Float`, `Double`
+- `String`, `CName`
+- `ref<T>`, `array<T>`
+
+`ResRef` and `TweakDBID` are not supported because they cannot be transformed 
+back to a `String`.
+
+> [!NOTE]  
+> Type of an array can be any of the supported types above, but it does not 
+> support arrays within arrays.
 
 ### Create Json data
 You can create JsonObject/JsonArray.

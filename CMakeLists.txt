@@ -8,6 +8,7 @@ configure_file(src/Config.h.in Config/Config.h)
 
 set(INC_FILES
         src/json/Json.h
+        src/json/FromJson.h
         src/json/JsonType.h
         src/json/JsonVariant.h
         src/json/JsonNull.h
@@ -19,12 +20,14 @@ set(INC_FILES
         src/json/JsonArray.h
         src/json/JsonObject.h
         src/json/JsonFactory.h
+        src/json/ToJson.h
 )
 
 set(SRC_FILES
         src/main.cpp
 
         src/json/Json.cpp
+        src/json/FromJson.cpp
         src/json/JsonVariant.cpp
         src/json/JsonNull.cpp
         src/json/JsonBool.cpp
@@ -34,6 +37,7 @@ set(SRC_FILES
         src/json/JsonString.cpp
         src/json/JsonArray.cpp
         src/json/JsonObject.cpp
+        src/json/ToJson.cpp
 )
 
 source_group(include FILES INC_FILES)
