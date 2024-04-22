@@ -22,5 +22,7 @@ end
 registerForEvent('onInit', function()
   print("== RedData - Examples ==")
   ExampleJson()
+  -- DTO is not required in Lua. Actually, all Json features can be ignored
+  -- and replaced with json.decode / json.encode.
   print("== RedData - Examples ==")
 end)
