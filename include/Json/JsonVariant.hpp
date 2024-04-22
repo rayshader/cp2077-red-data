@@ -53,6 +53,13 @@ class JsonVariant {
     return result;
   }
 
+  bool IsUint64() const {
+    bool result;
+
+    Red::CallVirtual(wrapper, "IsUint64", result);
+    return result;
+  }
+
   bool IsDouble() const {
     bool result;
 

@@ -76,6 +76,13 @@ class JsonObject : public JsonVariant {
     return value;
   }
 
+  uint64_t GetKeyUint64(const Red::CString& key) const {
+    uint64_t value;
+
+    Red::CallVirtual(wrapper, "GetKeyUint64", value, key);
+    return value;
+  }
+
   double GetKeyDouble(const Red::CString& key) const {
     double value;
 
@@ -100,6 +107,10 @@ class JsonObject : public JsonVariant {
 
   void SetKeyInt64(const Red::CString& key, int64_t value) {
     Red::CallVirtual(wrapper, "SetKeyInt64", key, value);
+  }
+
+  void SetKeyUint64(const Red::CString& key, uint64_t value) {
+    Red::CallVirtual(wrapper, "SetKeyUint64", key, value);
   }
 
   void SetKeyDouble(const Red::CString& key, double value) {

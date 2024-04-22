@@ -65,6 +65,13 @@ class JsonArray : public JsonVariant {
     return value;
   }
 
+  uint64_t GetItemUint64(uint32_t index) const {
+    uint64_t value;
+
+    Red::CallVirtual(wrapper, "GetItemUint64", value, index);
+    return value;
+  }
+
   double GetItemDouble(uint32_t index) const {
     double value;
 
@@ -91,6 +98,10 @@ class JsonArray : public JsonVariant {
     Red::CallVirtual(wrapper, "SetItemInt64", index, value);
   }
 
+  void SetItemUint64(uint32_t index, uint64_t value) const {
+    Red::CallVirtual(wrapper, "SetItemUint64", index, value);
+  }
+
   void SetItemDouble(uint32_t index, double value) const {
     Red::CallVirtual(wrapper, "SetItemDouble", index, value);
   }
@@ -107,6 +118,10 @@ class JsonArray : public JsonVariant {
 
   void AddItemInt64(int64_t value) const {
     Red::CallVirtual(wrapper, "AddItemInt64", value);
+  }
+
+  void AddItemUint64(uint64_t value) const {
+    Red::CallVirtual(wrapper, "AddItemUint64", value);
   }
 
   void AddItemDouble(double value) const {
@@ -127,6 +142,10 @@ class JsonArray : public JsonVariant {
 
   void InsertItemInt64(uint32_t index, int64_t value) const {
     Red::CallVirtual(wrapper, "InsertItemInt64", index, value);
+  }
+
+  void InsertItemUint64(uint32_t index, uint64_t value) const {
+    Red::CallVirtual(wrapper, "InsertItemUint64", index, value);
   }
 
   void InsertItemDouble(uint32_t index, double value) const {
