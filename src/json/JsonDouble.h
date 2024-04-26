@@ -20,7 +20,8 @@ class JsonDouble : public JsonVariant {
 
   [[nodiscard]] double get_double() const override;
 
-  [[nodiscard]] Red::CString to_string() const override;
+  [[nodiscard]] Red::CString to_string(
+    const Red::Optional<Red::CString>& p_indent) const override;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonDouble);
   RTTI_IMPL_ALLOCATOR();

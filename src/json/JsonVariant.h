@@ -15,7 +15,9 @@ class JsonVariant : public Red::IScriptable {
  public:
   JsonVariant();
 
+  static bool is_indent_illegal(const std::string& p_indent);
   static std::string to_json(const JsonVariant* p_json,
+                             const std::string& p_current_indent,
                              const std::string& p_indent);
 
   [[nodiscard]] bool is_undefined() const;
@@ -34,7 +36,8 @@ class JsonVariant : public Red::IScriptable {
   [[nodiscard]] virtual double get_double() const;
   [[nodiscard]] virtual Red::CString get_string() const;
 
-  [[nodiscard]] virtual Red::CString to_string() const;
+  [[nodiscard]] virtual Red::CString to_string(
+    const Red::Optional<Red::CString>& p_indent) const;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonVariant);
   RTTI_IMPL_ALLOCATOR();

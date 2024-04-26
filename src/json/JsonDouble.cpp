@@ -16,7 +16,8 @@ double JsonDouble::get_double() const {
   return value;
 }
 
-Red::CString JsonDouble::to_string() const {
+Red::CString JsonDouble::to_string(
+  const Red::Optional<Red::CString>& p_indent) const {
   std::stringstream stream;
 
   stream << value;

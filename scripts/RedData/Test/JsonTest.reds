@@ -71,6 +71,120 @@ public class JsonTest extends JsonBaseTest {
     this.m_jsonNestedDto += "}";
   }
 
+  private cb func Test_ToString_DefaultIsMinified() {
+    let json = new JsonObject();
+
+    json.SetKeyString("message", "Welcome to Night City!");
+    json.SetKeyDouble("version", 2.12);
+    json.SetKeyInt64("code", 9223372036854775807l);
+    json.SetKeyUint64("long_code", 18446744073709551615ul);
+    json.SetKeyBool("test", true);
+    json.SetKeyNull("empty");
+    let array = new JsonArray();
+
+    array.AddItemString("Hello");
+    array.AddItemInt64(42);
+    array.AddItemUint64(1337ul);
+    array.AddItemDouble(3.14159);
+    array.AddItemNull();
+    json.SetKey("items", array);
+    let actual = json.ToString();
+    // Follow hash order of 'std::unordered_map'.
+    let expect = "{" +
+                   "\"code\":9223372036854775807," +
+                   "\"message\":\"Welcome to Night City!\"," +
+                   "\"items\":[" +
+                     "\"Hello\"," +
+                     "42," +
+                     "1337," +
+                     "3.14159," +
+                     "null" +
+                   "]," +
+                   "\"version\":2.12," +
+                   "\"long_code\":18446744073709551615," +
+                   "\"test\":true," +
+                   "\"empty\":null" +
+                 "}";
+
+    this.ExpectUnicodeString("ToString() is minified", actual, expect);
+  }
+
+  private cb func Test_ToString_Pretty() {
+    let json = new JsonObject();
+
+    json.SetKeyString("message", "Welcome to Night City!");
+    json.SetKeyDouble("version", 2.12);
+    json.SetKeyInt64("code", 9223372036854775807l);
+    json.SetKeyUint64("long_code", 18446744073709551615ul);
+    json.SetKeyBool("test", true);
+    json.SetKeyNull("empty");
+    let array = new JsonArray();
+
+    array.AddItemString("Hello");
+    array.AddItemInt64(42);
+    array.AddItemUint64(1337ul);
+    array.AddItemDouble(3.14159);
+    array.AddItemNull();
+    json.SetKey("items", array);
+    let actual = json.ToString("  ");
+    // Follow hash order of 'std::unordered_map'.
+    let expect = "{\n" +
+                 "  \"code\": 9223372036854775807,\n" +
+                 "  \"message\": \"Welcome to Night City!\",\n" +
+                 "  \"items\": [\n" +
+                 "    \"Hello\",\n" +
+                 "    42,\n" +
+                 "    1337,\n" +
+                 "    3.14159,\n" +
+                 "    null\n" +
+                 "  ],\n" +
+                 "  \"version\": 2.12,\n" +
+                 "  \"long_code\": 18446744073709551615,\n" +
+                 "  \"test\": true,\n" +
+                 "  \"empty\": null\n" +
+                 "}";
+
+    this.ExpectUnicodeString("ToString(\"  \") is pretty formatted", actual, expect);
+  }
+
+  private cb func Test_ToString_IllegalIndent() {
+    let json = new JsonObject();
+
+    json.SetKeyString("message", "Welcome to Night City!");
+    json.SetKeyDouble("version", 2.12);
+    json.SetKeyInt64("code", 9223372036854775807l);
+    json.SetKeyUint64("long_code", 18446744073709551615ul);
+    json.SetKeyBool("test", true);
+    json.SetKeyNull("empty");
+    let array = new JsonArray();
+
+    array.AddItemString("Hello");
+    array.AddItemInt64(42);
+    array.AddItemUint64(1337ul);
+    array.AddItemDouble(3.14159);
+    array.AddItemNull();
+    json.SetKey("items", array);
+    let actual = json.ToString("abc_-.012");
+    // Follow hash order of 'std::unordered_map'.
+    let expect = "{" +
+                   "\"code\":9223372036854775807," +
+                   "\"message\":\"Welcome to Night City!\"," +
+                   "\"items\":[" +
+                     "\"Hello\"," +
+                     "42," +
+                     "1337," +
+                     "3.14159," +
+                     "null" +
+                   "]," +
+                   "\"version\":2.12," +
+                   "\"long_code\":18446744073709551615," +
+                   "\"test\":true," +
+                   "\"empty\":null" +
+                 "}";
+
+    this.ExpectUnicodeString("ToString(\"abc_-.012\") illegal indent fallback to default", actual, expect);
+  }
+
   private cb func Test_ParseJson_Invalid() {
     let json = ParseJson("{key: value}");
 

@@ -8,29 +8,38 @@ JsonObject::JsonObject() {
 }
 
 std::string JsonObject::to_json(const JsonObject* p_object,
+                                const std::string& p_current_indent,
                                 const std::string& p_indent) {
+  bool is_pretty = !p_indent.empty();
   auto keys = p_object->get_string_keys();
+  std::string inner_indent = p_current_indent + p_indent;
   std::string json = "{";
 
   for (int i = 0; i < keys.size(); i++) {
     auto key = keys[i];
     auto value = p_object->get_key(key);
 
-    json.append("\n");
-    json.append(p_indent);
-    json.append("  ");
+    if (is_pretty) {
+      json.append("\n");
+      json.append(inner_indent);
+    }
     json.append("\"");
     json.append(key);
-    json.append("\": ");
-    json.append(JsonVariant::to_json(value, p_indent + "  "));
+    json.append("\":");
+    if (is_pretty) {
+      json.append(" ");
+    }
+    json.append(JsonVariant::to_json(value, inner_indent, p_indent));
     if (i + 1 < keys.size()) {
       json.append(",");
     }
   }
-  if (!keys.empty()) {
+  if (!keys.empty() && is_pretty) {
     json.append("\n");
   }
-  json.append(p_indent);
+  if (is_pretty) {
+    json.append(p_current_indent);
+  }
   json.append("}");
   return json;
 }
@@ -151,8 +160,14 @@ void JsonObject::clear() {
   fields.clear();
 }
 
-Red::CString JsonObject::to_string() const {
-  return to_json(this);
+Red::CString JsonObject::to_string(
+  const Red::Optional<Red::CString>& p_indent) const {
+  std::string indent = p_indent.value.c_str();
+
+  if (JsonVariant::is_indent_illegal(indent)) {
+    indent = "";
+  }
+  return to_json(this, "", indent);
 }
 
 std::vector<std::string> JsonObject::get_string_keys() const {

@@ -6,18 +6,29 @@ namespace RedData::Json {
 
 JsonVariant::JsonVariant() : type(JsonType::Undefined) {}
 
+bool JsonVariant::is_indent_illegal(const std::string& p_indent) {
+  for (const char& c : p_indent) {
+    if (c != ' ' && c != '\t') {
+      return true;
+    }
+  }
+  return false;
+}
+
 std::string JsonVariant::to_json(const JsonVariant* p_json,
+                                 const std::string& p_current_indent,
                                  const std::string& p_indent) {
   if (p_json == nullptr) {
     return "";
   }
   if (p_json->is_object()) {
     return JsonObject::to_json(dynamic_cast<const JsonObject*>(p_json),
-                               p_indent);
+                               p_current_indent, p_indent);
   } else if (p_json->is_array()) {
-    return JsonArray::to_json(dynamic_cast<const JsonArray*>(p_json), p_indent);
+    return JsonArray::to_json(dynamic_cast<const JsonArray*>(p_json),
+                              p_current_indent, p_indent);
   } else {
-    return p_json->to_string().c_str();
+    return p_json->to_string({}).c_str();
   }
 }
 
@@ -77,7 +88,8 @@ Red::CString JsonVariant::get_string() const {
   return {};
 }
 
-Red::CString JsonVariant::to_string() const {
+Red::CString JsonVariant::to_string(
+  const Red::Optional<Red::CString>& p_indent) const {
   if (type == JsonType::Null) {
     return "null";
   }

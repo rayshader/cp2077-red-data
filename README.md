@@ -78,17 +78,25 @@ if !json.IsObject() {
 > IsArray() -> Bool  
 > IsObject() -> Bool
 > 
-> ToString() -> String
+> ToString(opt indent: String) -> String
 
-You can format Json data to a `String`. It will be pretty-formatted using a two 
-spaces indentation `  `.
+You can format Json data to a `String`. It will format output as minified Json 
+by default. You can pretty format Json with spaces and/or tabulations using 
+`indent` argument.
 ```swift
 // ...
-LogChannel(n"Info", json.ToString());
+LogChannel(n"Info", s"Minified: \(json.ToString())");
+LogChannel(n"Info", s"Pretty (two spaces): \(json.ToString("  "))");
+LogChannel(n"Info", s"Pretty (tab): \(json.ToString("\t"))");
 ```
 
-> Note: order of keys in a `JsonObject` is not preserved due to underlying 
+> [!NOTE]  
+> Order of keys in a `JsonObject` is not preserved due to underlying 
 > optimization.
+
+> [!WARNING]  
+> Using other characters than spaces and tabulations is not allowed. It will 
+> fallback to minified Json instead.
 
 #### JsonObject
 > GetKeys() -> array&lt;String&gt;  
@@ -284,7 +292,7 @@ message.author = null;
 message.text = "Hello world!";
 let json = ToJson(message);
 
-LogChannel(n"Info", s"json: \(json.ToString())");
+LogChannel(n"Info", s"json: \(json.ToString("  "))");
 // It should log:
 // {
 //   "id": 42,
@@ -327,7 +335,7 @@ items.AddItemInt64(2077);
 items.AddItemDouble(13.37);
 items.AddItemString("Welcome to Night City!");
 json.SetKey("items", items);
-let text = json.ToString();
+let text = json.ToString("\t");
 
 LogChannel(n"Info", s"Json:");
 LogChannel(n"Info", text);

@@ -17,6 +17,7 @@ class JsonObject : public JsonVariant {
   JsonObject();
 
   static std::string to_json(const JsonObject* p_object,
+                             const std::string& p_current_indent = "",
                              const std::string& p_indent = "");
 
   [[nodiscard]] Red::DynArray<Red::CString> get_keys() const;
@@ -44,7 +45,8 @@ class JsonObject : public JsonVariant {
 
   void clear();
 
-  [[nodiscard]] Red::CString to_string() const override;
+  [[nodiscard]] Red::CString to_string(
+    const Red::Optional<Red::CString>& p_indent) const override;
 
   [[nodiscard]] std::vector<std::string> get_string_keys() const;
 

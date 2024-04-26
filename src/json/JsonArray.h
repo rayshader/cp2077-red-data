@@ -16,6 +16,7 @@ class JsonArray : public JsonVariant {
   JsonArray();
 
   static std::string to_json(const JsonArray* p_array,
+                             const std::string& p_current_indent = "",
                              const std::string& p_indent = "");
 
   [[nodiscard]] uint32_t get_size() const;
@@ -56,7 +57,8 @@ class JsonArray : public JsonVariant {
 
   void clear();
 
-  [[nodiscard]] Red::CString to_string() const override;
+  [[nodiscard]] Red::CString to_string(
+    const Red::Optional<Red::CString>& p_indent) const override;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonArray);
   RTTI_IMPL_ALLOCATOR();

@@ -16,6 +16,6 @@ public abstract native class JsonVariant {
   public native func GetDouble() -> Double;
   public native func GetString() -> String;
 
-  public native func ToString() -> String;
+  public native func ToString(opt indent: String) -> String;
 
 }

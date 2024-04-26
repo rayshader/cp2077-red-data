@@ -18,7 +18,8 @@ class JsonBool : public JsonVariant {
 
   [[nodiscard]] bool get_bool() const override;
 
-  [[nodiscard]] Red::CString to_string() const override;
+  [[nodiscard]] Red::CString to_string(
+    const Red::Optional<Red::CString>& p_indent) const override;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonBool);
   RTTI_IMPL_ALLOCATOR();

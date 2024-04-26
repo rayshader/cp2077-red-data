@@ -20,7 +20,8 @@ class JsonUint64 : public JsonVariant {
 
   [[nodiscard]] uint64_t get_uint64() const override;
 
-  [[nodiscard]] Red::CString to_string() const override;
+  [[nodiscard]] Red::CString to_string(
+    const Red::Optional<Red::CString>& p_indent) const override;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonUint64);
   RTTI_IMPL_ALLOCATOR();

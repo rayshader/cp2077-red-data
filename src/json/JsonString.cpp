@@ -27,7 +27,8 @@ Red::CString JsonString::get_string() const {
   return value;
 }
 
-Red::CString JsonString::to_string() const {
+Red::CString JsonString::to_string(
+  const Red::Optional<Red::CString>& p_indent) const {
   std::string escaped_value = value;
 
   for (const auto& rule : escape_rules) {

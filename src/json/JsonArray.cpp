@@ -8,25 +8,31 @@ JsonArray::JsonArray() {
 }
 
 std::string JsonArray::to_json(const JsonArray* p_array,
+                               const std::string& p_current_indent,
                                const std::string& p_indent) {
+  bool is_pretty = !p_indent.empty();
   uint32_t size = p_array->get_size();
   std::string json = "[";
+  std::string inner_indent = p_current_indent + p_indent;
 
   for (uint32_t i = 0; i < size; i++) {
     auto item = p_array->get_item(i);
 
-    json.append("\n");
-    json.append(p_indent);
-    json.append("  ");
-    json += JsonVariant::to_json(item, p_indent + "  ");
+    if (is_pretty) {
+      json.append("\n");
+      json.append(inner_indent);
+    }
+    json += JsonVariant::to_json(item, inner_indent, p_indent);
     if (i + 1 < size) {
       json.append(",");
     }
   }
-  if (size > 0) {
+  if (size > 0 && is_pretty) {
     json.append("\n");
   }
-  json.append(p_indent);
+  if (is_pretty) {
+    json.append(p_current_indent);
+  }
   json.append("]");
   return json;
 }
@@ -183,8 +189,14 @@ void JsonArray::clear() {
   items.Clear();
 }
 
-Red::CString JsonArray::to_string() const {
-  return to_json(this);
+Red::CString JsonArray::to_string(
+  const Red::Optional<Red::CString>& p_indent) const {
+  std::string indent = p_indent.value.c_str();
+
+  if (JsonVariant::is_indent_illegal(indent)) {
+    indent = "";
+  }
+  return to_json(this, "", indent);
 }
 
 }  // namespace RedData::Json
