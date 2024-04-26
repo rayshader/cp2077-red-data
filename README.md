@@ -8,7 +8,7 @@ This header-only library provides an API wrapper for [RedData] plugin.
 # Getting started
 
 ## Compatibility
-- [RedData] v0.3.0
+- [RedData] v0.4.0
 
 ## Requirements
 - [RED4ext.SDK]

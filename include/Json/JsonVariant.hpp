@@ -88,10 +88,10 @@ class JsonVariant {
     return result;
   }
 
-  Red::CString ToString() const {
+  Red::CString ToString(const Red::CString& indent = "") const {
     Red::CString str;
 
-    Red::CallVirtual(wrapper, "ToString", str);
+    Red::CallVirtual(wrapper, "ToString", str, indent);
     return str;
   }
 };
