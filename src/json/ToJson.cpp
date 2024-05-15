@@ -106,7 +106,8 @@ void object_to_json_set_key(Red::Handle<JsonObject>& p_json,
     p_json->set_key_null(name);
     return;
   } else if (type == Red::ERTTIType::Array) {
-    auto inner_type = reinterpret_cast<Red::CRTTIArrayType*>(p_prop->type)->innerType;
+    auto inner_type =
+      reinterpret_cast<Red::CRTTIArrayType*>(p_prop->type)->innerType;
     auto inner_json = JsonFactory::CreateArray();
 
     array_to_json(inner_json, inner_type, p_prop, p_object);
@@ -152,34 +153,28 @@ void array_to_json(Red::Handle<JsonArray>& p_json, Red::CBaseRTTIType* p_type,
   if (p_type->GetType() == Red::ERTTIType::Handle) {
     auto array = p_prop->GetValue<Red::DynArray<Red::Handle<Red::IScriptable>>>(
       p_object.instance);
-    auto inner_json = JsonFactory::CreateArray();
 
     for (const auto& item : array) {
       if (!item) {
-        inner_json->add_item_null();
+        p_json->add_item_null();
       } else {
-        inner_json->add_item(to_json(item));
+        p_json->add_item(to_json(item));
       }
     }
-    p_json->add_item(inner_json);
     return;
   } else if (p_type->GetType() == Red::ERTTIType::WeakHandle) {
     auto array =
       p_prop->GetValue<Red::DynArray<Red::WeakHandle<Red::IScriptable>>>(
         p_object.instance);
-    auto inner_json = JsonFactory::CreateArray();
 
     for (uint32_t i = 0; i < array.size; i++) {
-      inner_json->add_item_null();
+      p_json->add_item_null();
     }
-    p_json->add_item(inner_json);
     return;
   } /* else if (p_type->GetType() == Red::ERTTIType::Array) {
     auto inner_type = reinterpret_cast<Red::CRTTIArrayType*>(p_type)->innerType;
-    auto inner_json = JsonFactory::CreateArray();
 
-    array_to_json(json, inner_type, p_prop, p_object);
-    p_json->add_item(inner_json);
+    array_to_json(p_json, inner_type, p_prop, p_object);
   }*/
 }
 

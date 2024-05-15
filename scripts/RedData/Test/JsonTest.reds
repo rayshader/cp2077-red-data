@@ -27,6 +27,20 @@ public class SessionDto {
   let createdAt: Int32;
   let user: ref<UserDto>;
   let empty: ref<UserDto>;
+  let friends: array<ref<FriendDto>>;
+}
+
+public class FriendDto {
+  let id: Uint64;
+  let username: String;
+
+  public static func Create(id: Uint64, username: String) -> ref<FriendDto> {
+    let self = new FriendDto();
+
+    self.id = id;
+    self.username = username;
+    return self;
+  }
 }
 
 public class UserDto {
@@ -67,7 +81,13 @@ public class JsonTest extends JsonBaseTest {
     this.m_jsonNestedDto +=     "\"words\": [\"Hello\",\"world\",\"!\"],";
     this.m_jsonNestedDto +=     "\"i8\": [-128,-1,0,1,127],";
     this.m_jsonNestedDto +=     "\"names\": [\"VehicleObject\",\"PlayerPuppet\",\"WeaponObject\"]";
-    this.m_jsonNestedDto +=   "}";
+    this.m_jsonNestedDto +=   "},";
+    this.m_jsonNestedDto +=   "\"friends\": [";
+    this.m_jsonNestedDto +=   "  {\"id\": 1, \"username\": \"Welles\"},";
+    this.m_jsonNestedDto +=   "  {\"id\": 2, \"username\": \"Silverhand\"},";
+    this.m_jsonNestedDto +=   "  {\"id\": 3, \"username\": \"Takemura\"},";
+    this.m_jsonNestedDto +=   "  {\"id\": 4, \"username\": \"Vector\"}";
+    this.m_jsonNestedDto +=   "]";
     this.m_jsonNestedDto += "}";
   }
 
@@ -317,28 +337,44 @@ public class JsonTest extends JsonBaseTest {
     pass = this.ExpectBool("session.user == {...}", IsDefined(user), true);
     if !pass {
       LogChannel(n"Error", s"Failed to transform Json to Dto!");
-      return;
+    } else {
+      this.ExpectUint64("session.user.id == 42", user.id, 42ul);
+      this.ExpectString("session.user.username == 'NightCity'", user.username, "NightCity");
+      this.ExpectBool("session.user.isAdmin == true", user.isAdmin, true);
+
+      this.ExpectInt32("session.user.words.length == 3", ArraySize(user.words), 3);
+      this.ExpectString("session.user.words[0] == 'Hello'", user.words[0], "Hello");
+      this.ExpectString("session.user.words[1] == 'world'", user.words[1], "world");
+      this.ExpectString("session.user.words[2] == '!'", user.words[2], "!");
+
+      this.ExpectInt32("session.user.i8.length == 5", ArraySize(user.i8), 5);
+      this.ExpectInt8("session.user.i8[0] == -128", user.i8[0], Cast<Int8>(-128));
+      this.ExpectInt8("session.user.i8[1] == -1", user.i8[1], Cast<Int8>(-1));
+      this.ExpectInt8("session.user.i8[2] == 0", user.i8[2], Cast<Int8>(0));
+      this.ExpectInt8("session.user.i8[3] == 1", user.i8[3], Cast<Int8>(1));
+      this.ExpectInt8("session.user.i8[4] == 127", user.i8[4], Cast<Int8>(127));
+
+      this.ExpectInt32("session.user.names.length == 3", ArraySize(user.names), 3);
+      this.ExpectCName("session.user.names[0] == n'VehicleObject'", user.names[0], n"VehicleObject");
+      this.ExpectCName("session.user.names[1] == n'PlayerPuppet'", user.names[1], n"PlayerPuppet");
+      this.ExpectCName("session.user.names[2] == n'WeaponObject'", user.names[2], n"WeaponObject");
     }
-    this.ExpectUint64("session.user.id == 42", user.id, 42ul);
-    this.ExpectString("session.user.username == 'NightCity'", user.username, "NightCity");
-    this.ExpectBool("session.user.isAdmin == true", user.isAdmin, true);
+    let friends = session.friends;
 
-    this.ExpectInt32("session.user.words.length == 3", ArraySize(user.words), 3);
-    this.ExpectString("session.user.words[0] == 'Hello'", user.words[0], "Hello");
-    this.ExpectString("session.user.words[1] == 'world'", user.words[1], "world");
-    this.ExpectString("session.user.words[2] == '!'", user.words[2], "!");
-
-    this.ExpectInt32("session.user.i8.length == 5", ArraySize(user.i8), 5);
-    this.ExpectInt8("session.user.i8[0] == -128", user.i8[0], Cast<Int8>(-128));
-    this.ExpectInt8("session.user.i8[1] == -1", user.i8[1], Cast<Int8>(-1));
-    this.ExpectInt8("session.user.i8[2] == 0", user.i8[2], Cast<Int8>(0));
-    this.ExpectInt8("session.user.i8[3] == 1", user.i8[3], Cast<Int8>(1));
-    this.ExpectInt8("session.user.i8[4] == 127", user.i8[4], Cast<Int8>(127));
-
-    this.ExpectInt32("session.user.names.length == 3", ArraySize(user.names), 3);
-    this.ExpectCName("session.user.names[0] == n'VehicleObject'", user.names[0], n"VehicleObject");
-    this.ExpectCName("session.user.names[1] == n'PlayerPuppet'", user.names[1], n"PlayerPuppet");
-    this.ExpectCName("session.user.names[2] == n'WeaponObject'", user.names[2], n"WeaponObject");
+    this.ExpectBool("session.friends == [...]", true, true);
+    this.ExpectInt32("session.friends.length == 4", ArraySize(friends), 4);
+    if ArraySize(friends) != 4 {
+      LogChannel(n"Error", s"Failed to transform Json to Dto!");
+    } else {
+      this.ExpectUint64("session.friends[0].id == 1", friends[0].id, 1ul);
+      this.ExpectString("session.friends[0].username == \"Welles\"", friends[0].username, "Welles");
+      this.ExpectUint64("session.friends[1].id == 2", friends[1].id, 2ul);
+      this.ExpectString("session.friends[1].username == \"Silverhand\"", friends[1].username, "Silverhand");
+      this.ExpectUint64("session.friends[2].id == 3", friends[2].id, 3ul);
+      this.ExpectString("session.friends[2].username == \"Takemura\"", friends[2].username, "Takemura");
+      this.ExpectUint64("session.friends[3].id == 4", friends[3].id, 4ul);
+      this.ExpectString("session.friends[3].username == \"Vector\"", friends[3].username, "Vector");
+    }
   }
 
   private cb func Test_ToJson_Invalid() {
@@ -405,6 +441,10 @@ public class JsonTest extends JsonBaseTest {
     session.user.words = ["Hello", "world", "!"];
     session.user.i8 = [Cast<Int8>(-128), Cast<Int8>(-1), Cast<Int8>(0), Cast<Int8>(1), Cast<Int8>(127)];
     session.user.names = [n"VehicleObject", n"PlayerPuppet", n"WeaponObject"];
+    ArrayPush(session.friends, FriendDto.Create(1ul, "Welles"));
+    ArrayPush(session.friends, FriendDto.Create(2ul, "Silverhand"));
+    ArrayPush(session.friends, FriendDto.Create(3ul, "Takemura"));
+    ArrayPush(session.friends, FriendDto.Create(4ul, "Vector"));
     let json = ToJson(session);
     let pass = this.ExpectBool("To Json Nested", IsDefined(json), true);
 
@@ -429,45 +469,73 @@ public class JsonTest extends JsonBaseTest {
     pass = this.ExpectBool("$.user == {...}", user.IsObject(), true);
     if !pass {
       LogChannel(n"Error", "/!\\ JsonObject is expected in schema /!\\");
-      return;
-    }
-    this.ExpectJsonKeyUint64("$.user.id == 42", user, "id", 42ul);
-    this.ExpectJsonKeyString("$.user.username == 'NightCity'", user, "username", "NightCity");
-    this.ExpectJsonKeyBool("$.user.isAdmin == true", user, "isAdmin", true);
-    let words = user.GetKey("words") as JsonArray;
+    } else {
+      this.ExpectJsonKeyUint64("$.user.id == 42", user, "id", 42ul);
+      this.ExpectJsonKeyString("$.user.username == 'NightCity'", user, "username", "NightCity");
+      this.ExpectJsonKeyBool("$.user.isAdmin == true", user, "isAdmin", true);
+      let words = user.GetKey("words") as JsonArray;
 
-    pass = this.ExpectBool("$.user.words == [...]", words.IsArray(), true);
+      pass = this.ExpectBool("$.user.words == [...]", words.IsArray(), true);
+      if !pass {
+        LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
+      } else {
+        this.ExpectUint32("$.user.words.length == 3", words.GetSize(), 3u);
+        this.ExpectString("$.user.words[0] == 'Hello'", words.GetItemString(0u), "Hello");
+        this.ExpectString("$.user.words[1] == 'world'", words.GetItemString(1u), "world");
+        this.ExpectString("$.user.words[2] == '!'", words.GetItemString(2u), "!");
+      }
+      let i8 = user.GetKey("i8") as JsonArray;
+
+      pass = this.ExpectBool("$.user.i8 == [...]", i8.IsArray(), true);
+      if !pass {
+        LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
+      } else {
+        this.ExpectUint32("$.user.i8.length == 5", i8.GetSize(), 5u);
+        this.ExpectInt64("$.user.i8[0] == -128", i8.GetItemInt64(0u), -128l);
+        this.ExpectInt64("$.user.i8[1] == -1", i8.GetItemInt64(1u), -1l);
+        this.ExpectInt64("$.user.i8[2] == 0", i8.GetItemInt64(2u), 0l);
+        this.ExpectInt64("$.user.i8[3] == 1", i8.GetItemInt64(3u), 1l);
+        this.ExpectInt64("$.user.i8[4] == 127", i8.GetItemInt64(4u), 127l);
+      }
+      let names = user.GetKey("names") as JsonArray;
+
+      pass = this.ExpectBool("$.user.names == [...]", names.IsArray(), true);
+      if !pass {
+        LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
+      } else {
+        this.ExpectUint32("$.user.names.length == 3", names.GetSize(), 3u);
+        this.ExpectString("$.user.names[0] == n'VehicleObject'", names.GetItemString(0u), "VehicleObject");
+        this.ExpectString("$.user.names[1] == n'PlayerPuppet'", names.GetItemString(1u), "PlayerPuppet");
+        this.ExpectString("$.user.names[2] == n'WeaponObject'", names.GetItemString(2u), "WeaponObject");
+      }
+    }
+    let friends = json.GetKey("friends") as JsonArray;
+
+    pass = this.ExpectBool("$.friends == [...]", friends.IsArray(), true);
     if !pass {
       LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
     } else {
-      this.ExpectUint32("$.user.words.length == 3", words.GetSize(), 3u);
-      this.ExpectString("$.user.words[0] == 'Hello'", words.GetItemString(0u), "Hello");
-      this.ExpectString("$.user.words[1] == 'world'", words.GetItemString(1u), "world");
-      this.ExpectString("$.user.words[2] == '!'", words.GetItemString(2u), "!");
-    }
-    let i8 = user.GetKey("i8") as JsonArray;
+      this.ExpectUint32("$.friends.length == 4", friends.GetSize(), 4u);
+      if friends.GetSize() != 4u {
+        LogChannel(n"Error", s"Failed to transform Dto to Json!");
+      } else {
+        let friend = friends.GetItem(0u) as JsonObject;
 
-    pass = this.ExpectBool("$.user.i8 == [...]", i8.IsArray(), true);
-    if !pass {
-      LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
-    } else {
-      this.ExpectUint32("$.user.i8.length == 5", i8.GetSize(), 5u);
-      this.ExpectInt64("$.user.i8[0] == -128", i8.GetItemInt64(0u), -128l);
-      this.ExpectInt64("$.user.i8[1] == -1", i8.GetItemInt64(1u), -1l);
-      this.ExpectInt64("$.user.i8[2] == 0", i8.GetItemInt64(2u), 0l);
-      this.ExpectInt64("$.user.i8[3] == 1", i8.GetItemInt64(3u), 1l);
-      this.ExpectInt64("$.user.i8[4] == 127", i8.GetItemInt64(4u), 127l);
-    }
-    let names = user.GetKey("names") as JsonArray;
+        this.ExpectJsonKeyUint64("$.friends[0].id == 1", friend, "id", 1ul);
+        this.ExpectJsonKeyString("$.friends[0].username == \"Welles\"", friend, "username", "Welles");
 
-    pass = this.ExpectBool("$.user.names == [...]", names.IsArray(), true);
-    if !pass {
-      LogChannel(n"Error", "/!\\ JsonArray is expected in schema /!\\");
-    } else {
-      this.ExpectUint32("$.user.names.length == 3", names.GetSize(), 3u);
-      this.ExpectString("$.user.names[0] == n'VehicleObject'", names.GetItemString(0u), "VehicleObject");
-      this.ExpectString("$.user.names[1] == n'PlayerPuppet'", names.GetItemString(1u), "PlayerPuppet");
-      this.ExpectString("$.user.names[2] == n'WeaponObject'", names.GetItemString(2u), "WeaponObject");
+        friend = friends.GetItem(1u) as JsonObject;
+        this.ExpectJsonKeyUint64("$.friends[1].id == 2", friend, "id", 2ul);
+        this.ExpectJsonKeyString("$.friends[1].username == \"Silverhand\"", friend, "username", "Silverhand");
+        
+        friend = friends.GetItem(2u) as JsonObject;
+        this.ExpectJsonKeyUint64("$.friends[2].id == 3", friend, "id", 3ul);
+        this.ExpectJsonKeyString("$.friends[2].username == \"Takemura\"", friend, "username", "Takemura");
+        
+        friend = friends.GetItem(3u) as JsonObject;
+        this.ExpectJsonKeyUint64("$.friends[3].id == 4", friend, "id", 4ul);
+        this.ExpectJsonKeyString("$.friends[3].username == \"Vector\"", friend, "username", "Vector");
+      }
     }
   }
 
