@@ -46,117 +46,38 @@ void object_from_json(const JsonObject*& p_json,
     });
 }
 
+#define FILL_ARRAY(type)                        \
+  {                                             \
+    Red::DynArray<type> array;                  \
+                                                \
+    array_from_json_fill(p_json, array);        \
+    p_prop->SetValue(p_object.instance, array); \
+    return;                                     \
+  }
+
 void array_from_json(const JsonArray*& p_json, Red::CBaseRTTIType* p_type,
                      Red::CProperty*& p_prop,
                      Red::Handle<Red::IScriptable>& p_object) {
   Red::CName type_name = p_type->GetName();
 
   switch (type_name) {
-    case Red::GetTypeName<bool>(): {
-      Red::DynArray<bool> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<int8_t>(): {
-      Red::DynArray<int8_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<int16_t>(): {
-      Red::DynArray<int16_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<int32_t>(): {
-      Red::DynArray<int32_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<int64_t>(): {
-      Red::DynArray<int64_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<uint8_t>(): {
-      Red::DynArray<uint8_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<uint16_t>(): {
-      Red::DynArray<uint16_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<uint32_t>(): {
-      Red::DynArray<uint32_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<uint64_t>(): {
-      Red::DynArray<uint64_t> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<float>(): {
-      Red::DynArray<float> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<double>(): {
-      Red::DynArray<double> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<Red::CString>(): {
-      Red::DynArray<Red::CString> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<Red::CName>(): {
-      Red::DynArray<Red::CName> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<Red::ResRef>(): {
-      Red::DynArray<Red::ResRef> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
-    case Red::GetTypeName<Red::TweakDBID>(): {
-      Red::DynArray<Red::TweakDBID> array;
-
-      array_from_json_fill(p_json, array);
-      p_prop->SetValue(p_object.instance, array);
-      return;
-    }
+      // clang-format off
+    case Red::GetTypeName<bool>(): FILL_ARRAY(bool)
+    case Red::GetTypeName<int8_t>(): FILL_ARRAY(int8_t)
+    case Red::GetTypeName<int16_t>(): FILL_ARRAY(int16_t)
+    case Red::GetTypeName<int32_t>(): FILL_ARRAY(int32_t)
+    case Red::GetTypeName<int64_t>(): FILL_ARRAY(int64_t)
+    case Red::GetTypeName<uint8_t>(): FILL_ARRAY(uint8_t)
+    case Red::GetTypeName<uint16_t>(): FILL_ARRAY(uint16_t)
+    case Red::GetTypeName<uint32_t>(): FILL_ARRAY(uint32_t)
+    case Red::GetTypeName<uint64_t>(): FILL_ARRAY(uint64_t)
+    case Red::GetTypeName<float>(): FILL_ARRAY(float)
+    case Red::GetTypeName<double>(): FILL_ARRAY(double)
+    case Red::GetTypeName<Red::CString>(): FILL_ARRAY(Red::CString)
+    case Red::GetTypeName<Red::CName>(): FILL_ARRAY(Red::CName)
+    case Red::GetTypeName<Red::ResRef>(): FILL_ARRAY(Red::ResRef)
+    case Red::GetTypeName<Red::TweakDBID>(): FILL_ARRAY(Red::TweakDBID)
+      // clang-format on
   }
   if (p_type->GetType() == Red::ERTTIType::Handle) {
     auto inner_type =

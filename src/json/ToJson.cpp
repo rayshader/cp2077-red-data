@@ -114,123 +114,40 @@ void object_to_json_set_key(Red::Handle<JsonObject>& p_json,
   }
 }
 
+#define ADD_ITEMS(type, add)                                               \
+  {                                                                        \
+    auto array = p_prop->GetValue<Red::DynArray<type>>(p_object.instance); \
+                                                                           \
+    for (const auto& item : array) {                                       \
+      p_json->add_item_##add;                                              \
+    }                                                                      \
+    return;                                                                \
+  }
+
 void array_to_json(Red::Handle<JsonArray>& p_json, Red::CBaseRTTIType* p_type,
                    Red::CProperty*& p_prop,
                    const Red::Handle<Red::IScriptable>& p_object) {
   Red::CName type_name = p_type->GetName();
 
   switch (type_name) {
-    case Red::GetTypeName<bool>(): {
-      auto array = p_prop->GetValue<Red::DynArray<bool>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_bool(item);
-      }
+      // clang-format off
+    case Red::GetTypeName<bool>(): ADD_ITEMS(bool, bool(item))
+    case Red::GetTypeName<int8_t>(): ADD_ITEMS(int8_t, int64(item))
+    case Red::GetTypeName<int16_t>(): ADD_ITEMS(int16_t, int64(item))
+    case Red::GetTypeName<int32_t>(): ADD_ITEMS(int32_t, int64(item))
+    case Red::GetTypeName<int64_t>(): ADD_ITEMS(int64_t, int64(item))
+    case Red::GetTypeName<uint8_t>(): ADD_ITEMS(uint8_t, uint64(item))
+    case Red::GetTypeName<uint16_t>(): ADD_ITEMS(uint16_t, uint64(item))
+    case Red::GetTypeName<uint32_t>(): ADD_ITEMS(uint32_t, uint64(item))
+    case Red::GetTypeName<uint64_t>(): ADD_ITEMS(uint64_t, uint64(item))
+    case Red::GetTypeName<float>(): ADD_ITEMS(float, double(item))
+    case Red::GetTypeName<double>(): ADD_ITEMS(double, double(item))
+    case Red::GetTypeName<Red::CString>(): ADD_ITEMS(Red::CString, string(item))
+    case Red::GetTypeName<Red::CName>(): ADD_ITEMS(Red::CName, string(item.ToString()))
+    case Red::GetTypeName<Red::ResRef>(): // NOTE: FNV1a64 is only one way.
+    case Red::GetTypeName<Red::TweakDBID>(): // NOTE: CRC32 is only one way.
       return;
-    }
-    case Red::GetTypeName<int8_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<int8_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_int64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<int16_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<int16_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_int64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<int32_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<int32_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_int64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<int64_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<int64_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_int64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<uint8_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<uint8_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_uint64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<uint16_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<uint16_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_uint64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<uint32_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<uint32_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_uint64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<uint64_t>(): {
-      auto array = p_prop->GetValue<Red::DynArray<uint64_t>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_uint64(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<float>(): {
-      auto array = p_prop->GetValue<Red::DynArray<float>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_double(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<double>(): {
-      auto array = p_prop->GetValue<Red::DynArray<double>>(p_object.instance);
-
-      for (auto item : array) {
-        p_json->add_item_double(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<Red::CString>(): {
-      auto array =
-        p_prop->GetValue<Red::DynArray<Red::CString>>(p_object.instance);
-
-      for (const auto& item : array) {
-        p_json->add_item_string(item);
-      }
-      return;
-    }
-    case Red::GetTypeName<Red::CName>(): {
-      auto array =
-        p_prop->GetValue<Red::DynArray<Red::CName>>(p_object.instance);
-
-      for (const auto& item : array) {
-        p_json->add_item_string(item.ToString());
-      }
-      return;
-    }
-    case Red::GetTypeName<Red::ResRef>():
-    case Red::GetTypeName<Red::TweakDBID>():
-      // NOTE: FNV1a64 is only one way.
-      // NOTE: CRC32 is only one way.
-      return;
+      // clang-format on
   }
   if (p_type->GetType() == Red::ERTTIType::Handle) {
     auto array = p_prop->GetValue<Red::DynArray<Red::Handle<Red::IScriptable>>>(
