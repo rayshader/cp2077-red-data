@@ -8,10 +8,8 @@
 
 #include "JsonArray.h"
 #include "JsonBool.h"
-#include "JsonDouble.h"
-#include "JsonInt64.h"
-#include "JsonUint64.h"
 #include "JsonNull.h"
+#include "JsonNumber.h"
 #include "JsonObject.h"
 #include "JsonString.h"
 #include "JsonVariant.h"
@@ -37,31 +35,31 @@ class JsonFactory {
     return Create<bool, JsonBool>(p_value);
   }
 
-  inline static Red::Handle<JsonInt64> CreateInt64(
+  inline static Red::Handle<JsonNumber> CreateInt64(
     const simdjson::dom::element& p_value) {
-    return Create<int64_t, JsonInt64>(p_value);
+    return Create<int64_t, JsonNumber>(p_value);
   }
 
-  inline static Red::Handle<JsonInt64> CreateInt64(int64_t p_value) {
-    return Create<int64_t, JsonInt64>(p_value);
+  inline static Red::Handle<JsonNumber> CreateInt64(int64_t p_value) {
+    return Create<int64_t, JsonNumber>(p_value);
   }
 
-  inline static Red::Handle<JsonUint64> CreateUint64(
+  inline static Red::Handle<JsonNumber> CreateUint64(
     const simdjson::dom::element& p_value) {
-    return Create<uint64_t, JsonUint64>(p_value);
+    return Create<uint64_t, JsonNumber>(p_value);
   }
 
-  inline static Red::Handle<JsonUint64> CreateUint64(uint64_t p_value) {
-    return Create<uint64_t, JsonUint64>(p_value);
+  inline static Red::Handle<JsonNumber> CreateUint64(uint64_t p_value) {
+    return Create<uint64_t, JsonNumber>(p_value);
   }
 
-  inline static Red::Handle<JsonDouble> CreateDouble(
+  inline static Red::Handle<JsonNumber> CreateDouble(
     const simdjson::dom::element& p_value) {
-    return Create<double, JsonDouble>(p_value);
+    return Create<double, JsonNumber>(p_value);
   }
 
-  inline static Red::Handle<JsonDouble> CreateDouble(double p_value) {
-    return Create<double, JsonDouble>(p_value);
+  inline static Red::Handle<JsonNumber> CreateDouble(double p_value) {
+    return Create<double, JsonNumber>(p_value);
   }
 
   inline static Red::Handle<JsonString> CreateString(

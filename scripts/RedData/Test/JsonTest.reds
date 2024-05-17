@@ -14,7 +14,9 @@ public class TypesDto {
   let pUint64: Uint64;
 
   let pFloat: Float;
+  let pFloatInt: Float;
   let pDouble: Double;
+  let pDoubleInt: Double;
 
   let pString: String;
   let pCName: CName;
@@ -67,7 +69,7 @@ public class JsonTest extends JsonBaseTest {
     this.m_jsonDto +=   "\"pBool\": true,";
     this.m_jsonDto +=   "\"pInt8\": 127,\"pInt16\": 32767,\"pInt32\": 2147483647,\"pInt64\": 9223372036854775807,";
     this.m_jsonDto +=   "\"pUint8\": 255,\"pUint16\": 65535,\"pUint32\": 4294967295,\"pUint64\": 18446744073709551615,";
-    this.m_jsonDto +=   "\"pFloat\": 3.141592,\"pDouble\": 3.141592653589793,";
+    this.m_jsonDto +=   "\"pFloat\": 3.141592, \"pFloatInt\": 1,\"pDouble\": 3.141592653589793, \"pDoubleInt\": 42,";
     this.m_jsonDto +=   "\"pString\": \"Hello world!\",\"pCName\": \"VehicleObject\",\"pResRef\": \"base\\\\anim_cooked.cookedanims\",\"pTweakDBID\": \"Items.RequiredItemStats\"";
     this.m_jsonDto += "}";
 
@@ -304,7 +306,9 @@ public class JsonTest extends JsonBaseTest {
     this.ExpectUint64("dto.pUint64 == 18446744073709551615", dto.pUint64, 18446744073709551615ul);
 
     this.ExpectFloat("dto.pFloat == 3.141592", dto.pFloat, 3.141592);
+    this.ExpectFloat("dto.pFloatInt == 1.0", dto.pFloatInt, 1.0);
     this.ExpectDouble("dto.pDouble == 3.141592653589793", dto.pDouble, 3.141592653589793d);
+    this.ExpectDouble("dto.pDoubleInt == 42.0", dto.pDoubleInt, 42.0d);
 
     this.ExpectString("dto.pString == 'Hello world!'", dto.pString, "Hello world!");
     this.ExpectCName("dto.pCName == n'VehicleObject'", dto.pCName, n"VehicleObject");
@@ -389,7 +393,7 @@ public class JsonTest extends JsonBaseTest {
     types.pBool = true;
     types.pInt8 = Cast<Int8>(127); types.pInt16 = Cast<Int16>(32767); types.pInt32 = 2147483647; types.pInt64 = 9223372036854775807l;
     types.pUint8 = Cast<Uint8>(255u); types.pUint16 = Cast<Uint16>(65535u); types.pUint32 = 4294967295u; types.pUint64 = 18446744073709551615ul;
-    types.pFloat = 3.141592; types.pDouble = 3.141592653589793d;
+    types.pFloat = 3.141592; types.pFloatInt = 1.0; types.pDouble = 3.141592653589793d; types.pDoubleInt = 42.0d;
     types.pString = "Hello world!"; types.pCName = n"VehicleObject"; types.pResRef = r"base\\anim_cooked.cookedanims"; types.pTweakDBID = t"Items.RequiredItemStats";
     let json = ToJson(types);
     let pass = this.ExpectBool("To Json", IsDefined(json), true);
@@ -418,7 +422,9 @@ public class JsonTest extends JsonBaseTest {
     this.ExpectJsonKeyUint64("$.pUint64 == 18446744073709551615", obj, "pUint64", 18446744073709551615ul);
 
     this.ExpectJsonKeyDouble("$.pFloat == 3.141592", obj, "pFloat", 3.141592);
+    this.ExpectJsonKeyDouble("$.pFloatInt == 1.0", obj, "pFloatInt", 1.0);
     this.ExpectJsonKeyDouble("$.pDouble == 3.141592653589793", obj, "pDouble", 3.141592653589793d);
+    this.ExpectJsonKeyDouble("$.pDoubleInt == 42.0", obj, "pDoubleInt", 42.0d);
 
     this.ExpectJsonKeyString("$.pString == 'Hello world!'", obj, "pString", "Hello world!");
     this.ExpectJsonKeyCName("$.pCName == n'VehicleObject'", obj, "pCName", n"VehicleObject");
