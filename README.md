@@ -1,5 +1,5 @@
 # Red Data Api
-![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.12-blue)
+![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.12a-blue)
 ![GitHub License](https://img.shields.io/github/license/rayshader/cp2077-red-filesystem)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
@@ -8,7 +8,7 @@ This header-only library provides an API wrapper for [RedData] plugin.
 # Getting started
 
 ## Compatibility
-- [RedData] v0.4.1
+- [RedData] v0.4.2
 
 ## Requirements
 - [RED4ext.SDK]
@@ -18,7 +18,7 @@ This header-only library provides an API wrapper for [RedData] plugin.
 
 1. Clone this branch as a submodule in your project:
 ```shell
-git clone submodule add -b api https://github.com/rayshader/cp2077-red-data deps/RedData
+git submodule add -b api https://github.com/rayshader/cp2077-red-data deps/RedData
 ```
 2. Add dependency in CMake:
 ```cmake
