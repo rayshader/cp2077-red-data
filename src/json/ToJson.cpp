@@ -28,6 +28,10 @@ Red::Handle<JsonObject> to_json(const Red::Handle<Red::IScriptable>& p_object) {
   return json;
 }
 
+#define SET_KEY(type, set)                                                \
+  p_json->set_key_##set(name, p_prop->GetValue<type>(p_object.instance)); \
+  return;
+
 void object_to_json_set_key(Red::Handle<JsonObject>& p_json,
                             Red::CProperty*& p_prop,
                             const Red::Handle<Red::IScriptable>& p_object) {
@@ -35,47 +39,19 @@ void object_to_json_set_key(Red::Handle<JsonObject>& p_json,
   Red::CString name = p_prop->name.ToString();
 
   switch (type_name) {
-    case Red::GetTypeName<bool>():
-      p_json->set_key_bool(name, p_prop->GetValue<bool>(p_object.instance));
-      return;
-    case Red::GetTypeName<int8_t>():
-      p_json->set_key_int64(name, p_prop->GetValue<int8_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<int16_t>():
-      p_json->set_key_int64(name, p_prop->GetValue<int16_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<int32_t>():
-      p_json->set_key_int64(name, p_prop->GetValue<int32_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<int64_t>():
-      p_json->set_key_int64(name, p_prop->GetValue<int64_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<uint8_t>():
-      p_json->set_key_uint64(name,
-                             p_prop->GetValue<uint8_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<uint16_t>():
-      p_json->set_key_uint64(name,
-                             p_prop->GetValue<uint16_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<uint32_t>():
-      p_json->set_key_uint64(name,
-                             p_prop->GetValue<uint32_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<uint64_t>():
-      p_json->set_key_uint64(name,
-                             p_prop->GetValue<uint64_t>(p_object.instance));
-      return;
-    case Red::GetTypeName<float>():
-      p_json->set_key_double(name, p_prop->GetValue<float>(p_object.instance));
-      return;
-    case Red::GetTypeName<double>():
-      p_json->set_key_double(name, p_prop->GetValue<double>(p_object.instance));
-      return;
-    case Red::GetTypeName<Red::CString>():
-      p_json->set_key_string(name,
-                             p_prop->GetValue<Red::CString>(p_object.instance));
-      return;
+      // clang-format off
+    case Red::GetTypeName<bool>(): SET_KEY(bool, bool)
+    case Red::GetTypeName<int8_t>(): SET_KEY(int8_t, int64)
+    case Red::GetTypeName<int16_t>(): SET_KEY(int16_t, int64)
+    case Red::GetTypeName<int32_t>(): SET_KEY(int32_t, int64)
+    case Red::GetTypeName<int64_t>(): SET_KEY(int64_t, int64)
+    case Red::GetTypeName<uint8_t>(): SET_KEY(uint8_t, uint64)
+    case Red::GetTypeName<uint16_t>(): SET_KEY(uint16_t, uint64)
+    case Red::GetTypeName<uint32_t>(): SET_KEY(uint32_t, uint64)
+    case Red::GetTypeName<uint64_t>(): SET_KEY(uint64_t, uint64)
+    case Red::GetTypeName<float>(): SET_KEY(float, double)
+    case Red::GetTypeName<double>(): SET_KEY(double, double)
+    case Red::GetTypeName<Red::CString>(): SET_KEY(Red::CString, string)
     case Red::GetTypeName<Red::CName>(): {
       auto value = p_prop->GetValue<Red::CName>(p_object.instance);
 
@@ -87,6 +63,7 @@ void object_to_json_set_key(Red::Handle<JsonObject>& p_json,
       // NOTE: FNV1a64 is only one way.
       // NOTE: CRC32 is only one way.
       return;
+      // clang-format on
   }
   Red::ERTTIType type = p_prop->type->GetType();
 

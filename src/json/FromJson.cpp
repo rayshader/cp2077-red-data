@@ -99,6 +99,11 @@ void array_from_json(const JsonArray*& p_json, Red::CBaseRTTIType* p_type,
   }*/
 }
 
+#define GET_KEY(type, get)                                   \
+  p_prop->SetValue(p_object.instance,                        \
+                   static_cast<type>(p_field->get_##get())); \
+  return;
+
 void object_from_json_set_property(const Red::Handle<JsonVariant>& p_field,
                                    Red::CProperty*& p_prop,
                                    Red::Handle<Red::IScriptable>& p_object) {
@@ -106,58 +111,19 @@ void object_from_json_set_property(const Red::Handle<JsonVariant>& p_field,
   auto type = p_prop->type;
 
   switch (type_name) {
-    case Red::GetTypeName<bool>():
-      p_prop->SetValue(p_object.instance, p_field->get_bool());
-      return;
-    case Red::GetTypeName<int8_t>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<int8_t>(p_field->get_int64()));
-      return;
-    case Red::GetTypeName<int16_t>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<int16_t>(p_field->get_int64()));
-      return;
-    case Red::GetTypeName<int32_t>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<int32_t>(p_field->get_int64()));
-      return;
-    case Red::GetTypeName<int64_t>():
-      p_prop->SetValue(p_object.instance, p_field->get_int64());
-      return;
-    case Red::GetTypeName<uint8_t>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<uint8_t>(p_field->get_int64()));
-      return;
-    case Red::GetTypeName<uint16_t>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<uint16_t>(p_field->get_int64()));
-      return;
-    case Red::GetTypeName<uint32_t>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<uint32_t>(p_field->get_int64()));
-      return;
-    case Red::GetTypeName<uint64_t>(): {
-      uint64_t value;
-
-      if (p_field->is_uint64()) {
-        value = p_field->get_uint64();
-      } else {
-        value = static_cast<uint64_t>(p_field->get_int64());
-      }
-      p_prop->SetValue(p_object, value);
-      return;
-    }
-    case Red::GetTypeName<float>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<float>(p_field->get_double()));
-      return;
-    case Red::GetTypeName<double>():
-      p_prop->SetValue(p_object.instance,
-                       static_cast<double>(p_field->get_double()));
-      return;
-    case Red::GetTypeName<Red::CString>():
-      p_prop->SetValue(p_object.instance, p_field->get_string());
-      return;
+      // clang-format off
+    case Red::GetTypeName<bool>(): GET_KEY(bool, bool)
+    case Red::GetTypeName<int8_t>(): GET_KEY(int8_t, int64)
+    case Red::GetTypeName<int16_t>(): GET_KEY(int16_t, int64)
+    case Red::GetTypeName<int32_t>(): GET_KEY(int32_t, int64)
+    case Red::GetTypeName<int64_t>(): GET_KEY(int64_t, int64)
+    case Red::GetTypeName<uint8_t>(): GET_KEY(uint8_t, uint64)
+    case Red::GetTypeName<uint16_t>(): GET_KEY(uint16_t, uint64)
+    case Red::GetTypeName<uint32_t>(): GET_KEY(uint32_t, uint64)
+    case Red::GetTypeName<uint64_t>(): GET_KEY(uint64_t, uint64)
+    case Red::GetTypeName<float>(): GET_KEY(float, double)
+    case Red::GetTypeName<double>(): GET_KEY(double, double)
+    case Red::GetTypeName<Red::CString>(): GET_KEY(Red::CString, string)
     case Red::GetTypeName<Red::CName>():
       p_prop->SetValue(p_object.instance,
                        Red::CName(p_field->get_string().c_str()));
@@ -173,6 +139,7 @@ void object_from_json_set_property(const Red::Handle<JsonVariant>& p_field,
     case Red::GetTypeName<Red::TweakDBID>():
       p_prop->SetValue(p_object, Red::TweakDBID(p_field->get_string().c_str()));
       return;
+      // clang-format on
   }
   if (type->GetType() == Red::ERTTIType::Handle) {
     if (!p_field->is_object() || p_field->is_null()) {
@@ -209,27 +176,18 @@ void array_from_json_fill(const JsonArray*& p_json, Red::DynArray<T>& p_array,
   for (uint32_t i = 0; i < p_json->get_size(); i++) {
     if constexpr (std::is_same_v<T, bool>) {
       p_array.PushBack(p_json->get_item_bool(i));
-    } else if constexpr (std::is_same_v<T, int8_t>) {
+    } else if constexpr (std::is_same_v<T, int8_t> ||
+                         std::is_same_v<T, int16_t> ||
+                         std::is_same_v<T, int32_t> ||
+                         std::is_same_v<T, int64_t>) {
       p_array.PushBack(p_json->get_item_int64(i));
-    } else if constexpr (std::is_same_v<T, int16_t>) {
-      p_array.PushBack(p_json->get_item_int64(i));
-    } else if constexpr (std::is_same_v<T, int64_t>) {
-      p_array.PushBack(p_json->get_item_int64(i));
-    } else if constexpr (std::is_same_v<T, uint8_t>) {
-      p_array.PushBack(p_json->get_item_int64(i));
-    } else if constexpr (std::is_same_v<T, uint16_t>) {
-      p_array.PushBack(p_json->get_item_int64(i));
-    } else if constexpr (std::is_same_v<T, uint64_t>) {
-      auto item = p_json->get_item(i);
-
-      if (item->is_uint64()) {
-        p_array.PushBack(item->get_uint64());
-      } else {
-        p_array.PushBack(static_cast<uint64_t>(item->get_int64()));
-      }
-    } else if constexpr (std::is_same_v<T, float>) {
-      p_array.PushBack(p_json->get_item_double(i));
-    } else if constexpr (std::is_same_v<T, double>) {
+    } else if constexpr (std::is_same_v<T, uint8_t> ||
+                         std::is_same_v<T, uint16_t> ||
+                         std::is_same_v<T, uint32_t> ||
+                         std::is_same_v<T, uint64_t>) {
+      p_array.PushBack(p_json->get_item_uint64(i));
+    } else if constexpr (std::is_same_v<T, float> ||
+                         std::is_same_v<T, double>) {
       p_array.PushBack(p_json->get_item_double(i));
     } else if constexpr (std::is_same_v<T, Red::CString>) {
       p_array.PushBack(p_json->get_item_string(i));
