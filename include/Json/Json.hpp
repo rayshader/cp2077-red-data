@@ -16,12 +16,15 @@ inline JsonVariant ParseJson(const Red::CString& text) {
   return JsonVariant(handle);
 }
 
-inline Red::Handle<Red::IScriptable> FromJson(const JsonObject& json,
-                                              const Red::CName& type) {
+template <class T = Red::IScriptable>
+inline Red::Handle<T> FromJson(const JsonObject& json, Red::CName type = {}) {
   Red::Handle<Red::IScriptable> handle;
 
+  if constexpr (!std::is_same<T, Red::IScriptable>()) {
+    type = Red::GetTypeName<T>();
+  }
   Red::CallGlobal("RedData.Json.FromJson", handle, json.GetHandle(), type);
-  return handle;
+  return Red::AsHandle<T>(handle.GetPtr<T>());
 }
 
 inline JsonObject ToJson(const Red::Handle<Red::IScriptable>& object) {

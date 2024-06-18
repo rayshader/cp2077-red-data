@@ -19,9 +19,7 @@ class JsonVariant {
 
   explicit operator bool() const noexcept { return wrapper.operator bool(); }
 
-  operator Red::Handle<Red::IScriptable>() const noexcept {
-    return wrapper;
-  }
+  operator Red::Handle<Red::IScriptable>() const noexcept { return wrapper; }
 
   Red::Handle<Red::IScriptable> GetHandle() const { return wrapper; }
 
