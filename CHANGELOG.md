@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - crash when using `FromJson` with an empty type or when type is not found.
 
+### Changed
+- bump `simdjson` to 3.9.4 (was 3.9.1).
+
 ------------------------
 
 ## [0.4.2] - 2024-05-17
