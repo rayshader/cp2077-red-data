@@ -1,0 +1,15 @@
+{
+  "name": "RedData",
+  "version": "0.4.3",
+  "license": true,
+  "dist": "dist\\",
+  "scripts": {
+    "redscript": {
+      "src": "scripts\\RedData\\"
+    }
+  },
+  "plugin": {
+    "debug": "build\\Debug\\",
+    "release": "build\\Release\\"
+  }
+}
