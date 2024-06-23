@@ -23,6 +23,9 @@ Red::Handle<Red::IScriptable> from_json(const Red::Handle<JsonObject>& p_json,
   if (!p_json || !p_json->is_object() || p_json->is_null()) {
     return {};
   }
+  if (p_type.IsNone() || Red::GetClass(p_type) == nullptr) {
+    return {};
+  }
   Red::Handle<Red::IScriptable> object = Red::MakeScriptedHandle(p_type);
   const auto* json = p_json.GetPtr<const JsonObject>();
 
