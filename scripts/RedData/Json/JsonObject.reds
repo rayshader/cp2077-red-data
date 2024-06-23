@@ -1,3 +1,5 @@
+module RedData.Json
+
 public native class JsonObject extends JsonVariant {
 
   public native func GetKeys() -> array<String>;

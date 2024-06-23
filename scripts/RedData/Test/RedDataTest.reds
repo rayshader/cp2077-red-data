@@ -1,3 +1,6 @@
+module RedData.Test
+
+import RedData.Json.*
 import Codeware.*
 
 public class RedDataTest extends ScriptableEnv {

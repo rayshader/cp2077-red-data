@@ -1,3 +1,5 @@
+module RedData.Json
+
 public native class JsonArray extends JsonVariant {
 
   public native func GetSize() -> Uint32;

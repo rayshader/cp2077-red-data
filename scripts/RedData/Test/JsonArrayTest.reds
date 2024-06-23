@@ -1,3 +1,5 @@
+module RedData.Test
+
 import RedData.Json.*
 
 public class JsonArrayTest extends JsonBaseTest {

@@ -1,3 +1,5 @@
+module RedData.Json
+
 public abstract native class JsonVariant {
 
   public native func IsUndefined() -> Bool;

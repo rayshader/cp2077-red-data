@@ -1,3 +1,5 @@
+module RedData.Test
+
 import RedData.Json.*
 
 public class TypesDto {
@@ -273,7 +275,7 @@ public class JsonTest extends JsonBaseTest {
       LogChannel(n"Error", "/!\\ Parsing Json must fails /!\\");
       return;
     }
-    let object = FromJson(json, n"TypesDto") as TypesDto;
+    let object = FromJson(json, n"RedData.Test.TypesDto") as TypesDto;
 
     this.ExpectBool("Variant is not defined", IsDefined(object), false);
   }
@@ -286,7 +288,7 @@ public class JsonTest extends JsonBaseTest {
       LogChannel(n"Error", "/!\\ Failed to parse Json /!\\");
       return;
     }
-    let dto = FromJson(json, n"TypesDto") as TypesDto;
+    let dto = FromJson(json, n"RedData.Test.TypesDto") as TypesDto;
 
     pass = this.ExpectBool("TypesDto is defined", IsDefined(dto), true);
     if !pass {
@@ -324,7 +326,7 @@ public class JsonTest extends JsonBaseTest {
       LogChannel(n"Error", "/!\\ Failed to parse Json /!\\");
       return;
     }
-    let session = FromJson(json, n"SessionDto") as SessionDto;
+    let session = FromJson(json, n"RedData.Test.SessionDto") as SessionDto;
 
     pass = this.ExpectBool("session == {...}", IsDefined(session), true);
     if !pass {
