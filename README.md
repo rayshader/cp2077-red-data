@@ -348,7 +348,7 @@ Contributions are welcome, feel free to fill an issue or a PR.
 1. Install requirements:
   - CMake v3.27+
   - Visual Studio Community 2022+
-  - [red-cli] v0.1.0+
+  - [red-cli] v0.2.0+
 2. Configure project with:
 ```shell
 cmake -G "Visual Studio 17 2022" -A x64 -S . -B build
@@ -359,16 +359,12 @@ cmake -G "Visual Studio 17 2022" -A x64 -S . -B build
 cmake --build build --target RedData --config Debug
 ```
 
-## Tests
-1. Install in your game directory with test scripts:
+It will execute `red-cli install` for you using a CMake custom command.
 
-```shell
-red-cli install --debug
-```
- 
-2. Run game.
-3. Open CET, show Game Log popup.
-4. Output should show tests result.
+## Tests
+1. Run game.
+2. Open CET, show Game Log popup.
+3. Output should show tests result.
 
 ## Release
 1. Build in release mode:
@@ -377,11 +373,8 @@ red-cli install --debug
 cmake --build build --target RedData --config Release
 ```
 
-2. Bundle release:
-
-```shell
-red-cli pack
-```
+It will execute `red-cli pack` for you using a CMake custom command. You should
+find an archive `RedData-vX.Y.Z.zip` in the root directory, ready to release.
 
 <!-- Table of links -->
 [RED4ext]: https://github.com/WopsS/RED4ext
