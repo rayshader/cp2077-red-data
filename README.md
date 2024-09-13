@@ -1,5 +1,5 @@
 # Red Data Api
-![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.12a-blue)
+![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.13-blue)
 ![GitHub License](https://img.shields.io/github/license/rayshader/cp2077-red-filesystem)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
@@ -8,7 +8,7 @@ This header-only library provides an API wrapper for [RedData] plugin.
 # Getting started
 
 ## Compatibility
-- [RedData] v0.4.2
+- [RedData] v0.5.0
 
 ## Requirements
 - [RED4ext.SDK]
