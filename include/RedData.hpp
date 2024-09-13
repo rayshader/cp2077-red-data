@@ -8,7 +8,7 @@
 namespace RedData {
 
 inline bool IsDetected() {
-  return Red::Detail::GetGlobalFunction("RedData.Json.ParseJson") != nullptr;
+  return Red::GetGlobalFunction("RedData.Json.ParseJson") != nullptr;
 }
 
 }  // namespace RedData
