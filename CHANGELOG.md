@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+------------------------
+
+## [0.6.0] - 2024-12-11
 ### Changed
 - support patch 2.2.
 - bump `simdjson` to 3.11.2 (was 3.10.1).
@@ -68,7 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - parse/create/format Json data.
 
 <!-- Table of releases -->
-[Unreleased]: https://github.com/rayshader/cp2077-red-data/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/rayshader/cp2077-red-data/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/rayshader/cp2077-red-data/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/rayshader/cp2077-red-data/compare/v0.4.3...v0.5.0
 [0.4.3]: https://github.com/rayshader/cp2077-red-data/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/rayshader/cp2077-red-data/compare/v0.4.1...v0.4.2
