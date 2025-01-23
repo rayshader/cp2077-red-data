@@ -1,5 +1,5 @@
 # Red Data
-![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.2-blue)
+![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.21-blue)
 ![GitHub License](https://img.shields.io/github/license/rayshader/cp2077-red-data)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
@@ -9,13 +9,13 @@ supports Json for now. It can be used with Redscript and CET.
 # Getting started
 
 ## Compatibility
-- Cyberpunk 2077 v2.2
+- Cyberpunk 2077 v2.21
 - [Redscript] 0.5.27+
-- [Cyber Engine Tweaks] 1.34.0+
+- [Cyber Engine Tweaks] 1.35.0+
 
 ## Installation
 1. Install requirements:
-  - [RED4ext] v1.26.0+
+  - [RED4ext] v1.27.0+
 2. Extract the [latest archive] into the Cyberpunk 2077 directory.
 
 ## API wrapper
@@ -348,7 +348,7 @@ Contributions are welcome, feel free to fill an issue or a PR.
 1. Install requirements:
   - CMake v3.27+
   - Visual Studio Community 2022+
-  - [red-cli] v0.2.2+
+  - [red-cli] v0.4.0+
 2. Configure project with:
 ```shell
 cmake -G "Visual Studio 17 2022" -A x64 -S . -B build
@@ -374,7 +374,7 @@ cmake --build build --target RedData --config Release
 ```
 
 It will execute `red-cli pack` for you using a CMake custom command. You should
-find an archive `RedData-vX.Y.Z.zip` in the root directory, ready to release.
+find an archive `RedData-X.Y.Z.zip` in the root directory, ready to release.
 
 <!-- Table of links -->
 [RED4ext]: https://github.com/WopsS/RED4ext
