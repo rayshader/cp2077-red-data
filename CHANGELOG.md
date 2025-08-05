@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ------------------------
 
-## [0.7.0] - 2025-07-18
+## [0.8.0] - 2025-07-18
 ### Changed
 - support patch 2.3.
 - bump `simdjson` to 3.13.0 (was 3.11.6).
