@@ -1,5 +1,5 @@
 # Red Data
-![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.3-blue)
+![Cyberpunk 2077](https://img.shields.io/badge/Cyberpunk%202077-v2.31-blue)
 ![GitHub License](https://img.shields.io/github/license/rayshader/cp2077-red-data)
 [![Donate](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-yellow)](https://www.buymeacoffee.com/lpfreelance)
 
@@ -9,13 +9,13 @@ supports Json for now. It can be used with Redscript and CET.
 # Getting started
 
 ## Compatibility
-- Cyberpunk 2077 v2.3
+- Cyberpunk 2077 v2.31
 - [Redscript] 0.5.27+
 - [Cyber Engine Tweaks] 1.36.0+
 
 ## Installation
 1. Install requirements:
-  - [RED4ext] v1.28.0+
+  - [RED4ext] v1.29.0+
 2. Extract the [latest archive] into the Cyberpunk 2077 directory.
 
 ## API wrapper
