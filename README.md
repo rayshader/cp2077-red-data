@@ -55,11 +55,11 @@ You can parse Json content of a `String` like this:
 let json = ParseJson("<json data from example above>");
 
 if !IsDefined(json) {
-  LogChannel(n"Error", s"Failed to parse Json.");
+  FTLogError(s"Failed to parse Json.");
   return;
 }
 if !json.IsObject() {
-  LogChannel(n"Error", s"Expect root of Json document to be an object.");
+  FTLogError(s"Expect root of Json document to be an object.");
   return;
 }
 // ...
@@ -85,9 +85,9 @@ by default. You can pretty format Json with spaces and/or tabulations using
 `indent` argument.
 ```swift
 // ...
-LogChannel(n"Info", s"Minified: \(json.ToString())");
-LogChannel(n"Info", s"Pretty (two spaces): \(json.ToString("  "))");
-LogChannel(n"Info", s"Pretty (tab): \(json.ToString("\t"))");
+FTLog(s"Minified: \(json.ToString())");
+FTLog(s"Pretty (two spaces): \(json.ToString("  "))");
+FTLog(s"Pretty (tab): \(json.ToString("\t"))");
 ```
 
 > [!NOTE]  
@@ -254,7 +254,7 @@ let message = FromJson(json, n"MessageDto") as MessageDto;
 //                           ^
 //                           | CName of the class to format Json to.
 
-LogChannel(n"Info", s"text: \"\(message.text)\"");
+FTLog(s"text: \"\(message.text)\"");
 ```
 
 This feature supports the following types:
@@ -292,7 +292,7 @@ message.author = null;
 message.text = "Hello world!";
 let json = ToJson(message);
 
-LogChannel(n"Info", s"json: \(json.ToString("  "))");
+FTLog(s"json: \(json.ToString("  "))");
 // It should log:
 // {
 //   "id": 42,
@@ -337,8 +337,8 @@ items.AddItemString("Welcome to Night City!");
 json.SetKey("items", items);
 let text = json.ToString("\t");
 
-LogChannel(n"Info", s"Json:");
-LogChannel(n"Info", text);
+FTLog(s"Json:");
+FTLog(text);
 ```
 
 # Development

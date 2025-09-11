@@ -37,18 +37,18 @@ public class AwesomeSystem extends ScriptableSystem {
     if !isPreGame {
       return;
     }
-    LogChannel(n"Info", s"== RedData - Examples ==");
+    FTLog(s"== RedData - Examples ==");
     let json = this.Example_Json();
 
     this.Example_Dto(json);
-    LogChannel(n"Info", s"== RedData - Examples ==");
+    FTLog(s"== RedData - Examples ==");
   }
 
   /// Examples ///
 
   public func Example_Json() -> ref<JsonObject> {
-    LogChannel(n"Info", "");
-    LogChannel(n"Info", "== Json ==");
+    FTLog("");
+    FTLog("== Json ==");
     let json = new JsonObject();
 
     json.SetKeyString("name", "Awesome");
@@ -64,42 +64,42 @@ public class AwesomeSystem extends ScriptableSystem {
     json.SetKey("prices", prices);
     let text = json.ToString();
 
-    LogChannel(n"Info", text);
+    FTLog(text);
     json = ParseJson(text) as JsonObject;
-    LogChannel(n"Info", s"name: \(json.GetKeyString("name"))");
-    LogChannel(n"Info", s"version: \(json.GetKeyInt64("version"))");
-    LogChannel(n"Info", s"isEnabled: \(json.GetKeyBool("isEnabled"))");
-    LogChannel(n"Info", s"data: \(json.GetKey("data").IsNull())");
+    FTLog(s"name: \(json.GetKeyString("name"))");
+    FTLog(s"version: \(json.GetKeyInt64("version"))");
+    FTLog(s"isEnabled: \(json.GetKeyBool("isEnabled"))");
+    FTLog(s"data: \(json.GetKey("data").IsNull())");
     prices = json.GetKey("prices") as JsonArray;
-    LogChannel(n"Info", s"prices: \(prices.GetSize())");
+    FTLog(s"prices: \(prices.GetSize())");
     let i = 0u;
 
     while i < prices.GetSize() {
-      LogChannel(n"Info", s"Price #\(i): €$ \(prices.GetItemDouble(i))");
+      FTLog(s"Price #\(i): €$ \(prices.GetItemDouble(i))");
       i += 1u;
     }
     return json;
   }
 
   public func Example_Dto(json: ref<JsonObject>) {
-    LogChannel(n"Info", "");
-    LogChannel(n"Info", "== FromJson ==");
+    FTLog("");
+    FTLog("== FromJson ==");
     let test = FromJson(json, n"TestDto") as TestDto;
 
-    LogChannel(n"Info", s"name: \(test.name)");
-    LogChannel(n"Info", s"version: \(test.version)");
-    LogChannel(n"Info", s"isEnabled: \(test.isEnabled)");
-    LogChannel(n"Info", s"data: \(IsDefined(test.data))");
+    FTLog(s"name: \(test.name)");
+    FTLog(s"version: \(test.version)");
+    FTLog(s"isEnabled: \(test.isEnabled)");
+    FTLog(s"data: \(IsDefined(test.data))");
     let i = 0;
 
     for price in test.prices {
-      LogChannel(n"Info", s"prices[\(i)]: €$ \(price)");
+      FTLog(s"prices[\(i)]: €$ \(price)");
       i += 1;
     }
-    LogChannel(n"Info", "");
-    LogChannel(n"Info", "== ToJson ==");
+    FTLog("");
+    FTLog("== ToJson ==");
     json = ToJson(test);
-    LogChannel(n"Info", json.ToString());
+    FTLog(json.ToString());
   }
 
 }
