@@ -73,10 +73,10 @@ with:
 import RedData.Json.*
 ``` 
 
-### Parse Json
+### Parse JSON
 > ParseJson(text: String) -> ref&lt;JsonVariant&gt;
 
-e.g. with Json data:
+e.g. with JSON data:
 ```json
 {
   "name": "RedData",
@@ -91,7 +91,7 @@ e.g. with Json data:
 }
 ```
 
-You can parse Json content of a `String` like this:
+You can parse JSON content of a `String` like this:
 ```swift
 // ...
 let json = ParseJson("<json data from example above>");
@@ -122,8 +122,8 @@ if !json.IsObject() {
 > 
 > ToString(opt indent: String) -> String
 
-You can format Json data to a `String`. It will format output as minified Json 
-by default. You can pretty format Json with spaces and/or tabulations using 
+You can format JSON data to a `String`. It will format output as minified JSON 
+by default. You can pretty format JSON with spaces and/or tabulations using 
 `indent` argument.
 ```swift
 // ...
@@ -138,7 +138,7 @@ FTLog(s"Pretty (tab): \(json.ToString("\t"))");
 
 > [!WARNING]  
 > Using other characters than spaces and tabulations is not allowed. It will 
-> fallback to minified Json instead.
+> fallback to minified JSON instead.
 
 #### JsonObject
 > GetKeys() -> array&lt;String&gt;  
@@ -273,8 +273,8 @@ let size: Uint32 = items.GetSize();
 ### Json to DTO
 > FromJson(json: ref&lt;JsonObject&gt;, type: CName) -> ref&lt;IScriptable&gt;;
 
-You can create a class from Json. It will match properties of the class with 
-keys from Json data. The name of a property/key is case-sensitive.
+You can create a class from JSON. It will match properties of the class with 
+keys from JSON data. The name of a property/key is case-sensitive.
 
 ```swift
 public class MessageDto {
@@ -309,10 +309,9 @@ This feature supports the following types:
 
 When property is:
 - a weak reference: the value is always set to `null`.
-- a strong reference: the value is set with a new instance built from the Json 
-data, or it fallbacks to `null`.
-- an array: the value is set with an array built from the 
-Json data.
+- a strong reference: the value is set with a new instance built from the JSON 
+  data, or it falls back to `null`.
+- an array: the value is set with an array built from the JSON data.
 
 > [!NOTE]  
 > Type of array can be any of the supported types above, but it does not 
@@ -321,7 +320,7 @@ Json data.
 ### DTO to Json
 > ToJson(object: ref&lt;IScriptable&gt;) -> ref&lt;JsonObject&gt;;
 
-You can create Json data from a class. It will create a `JsonObject` based on 
+You can create JSON data from a class. It will create a `JsonObject` based on 
 properties of the object.
 
 ```swift
@@ -391,7 +390,7 @@ Contributions are welcome, feel free to fill an issue or a PR.
   - CMake v3.27+
   - Visual Studio Community 2022+
   - [red-cli] v0.4.0+
-2. Configure project with:
+2. Configure the project with:
 ```shell
 cmake -G "Visual Studio 17 2022" -A x64 -S . -B build
 ```
