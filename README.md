@@ -10,8 +10,8 @@ supports Json for now. It can be used with Redscript and CET.
 
 ## Compatibility
 - Cyberpunk 2077 v2.31
-- [Redscript] 0.5.27+
-- [Cyber Engine Tweaks] 1.36.0+
+- [Redscript] 0.5.31+
+- [Cyber Engine Tweaks] 1.37.0+
 
 ## Installation
 1. Install requirements:
