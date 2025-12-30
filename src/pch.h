@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <simdjson.h>
+#include <uuid.h>
 
 #include <RED4ext/RED4ext.hpp>
 #include <RED4ext/CName.hpp>

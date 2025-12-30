@@ -23,9 +23,51 @@ supports Json for now. It can be used with Redscript and CET.
 This plugin can be used when writing a RED4ext plugin with RedLib. You can 
 find a C++ API wrapper in [branch api].
 
-## Usage
+# Usage
 
-All Json features are defined in module `RedData.Json`. You need to import it 
+## UUID
+
+All UUID features are defined in module `RedData`. You need to import it
+with:
+```swift
+import RedData.*
+``` 
+
+You can generate a random UUID like this:
+```swift
+let uuid: UUID = UUID.Generate();
+```
+
+You can format a UUID to and from a `String`:
+```swift
+let uuid: UUID = UUID.Generate();
+FTLog(s"uuid: \(UUID.ToString(uuid))"); // uuid: ????????-????-????-????-????????????
+
+uuid = UUID.FromString("303432db-08a0-4431-ae35-48c949ff511a");
+FTLog(s"uuid: \(UUID.ToString(uuid))"); // uuid: 303432db-08a0-4431-ae35-48c949ff511a
+```
+
+You can test whether a UUID is valid:
+```swift
+let uuid: UUID = UUID.FromString("weewoo");
+FTLog(s"Is valid: \(UUID.IsValid(uuid))"); // Is valid: false
+```
+
+You can compare UUIDs for equality:
+```swift
+let a: UUID = UUID.Generate();
+let b: UUID = UUID.Generate();
+
+if UUID.Equals(a, b) {
+  FTLog("UUIDs are equal.");
+} else {
+  FTLog("UUIDs are different.");
+}
+```
+
+## JSON
+
+All JSON features are defined in module `RedData.Json`. You need to import it
 with:
 ```swift
 import RedData.Json.*

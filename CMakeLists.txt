@@ -19,6 +19,8 @@ set(INC_FILES
         src/json/JsonObject.h
         src/json/JsonFactory.h
         src/json/ToJson.h
+
+        src/utils/UUID.h
 )
 
 set(SRC_FILES
@@ -35,6 +37,8 @@ set(SRC_FILES
         src/json/JsonArray.cpp
         src/json/JsonObject.cpp
         src/json/ToJson.cpp
+
+        src/utils/UUID.cpp
 )
 
 source_group(include FILES INC_FILES)
@@ -69,22 +73,32 @@ add_subdirectory(deps/RedLib)
 set_target_properties(RedLib PROPERTIES FOLDER "Dependencies")
 ##
 
-## Library simdjson
 include(FetchContent)
 
+## Library simdjson
 FetchContent_Declare(
         simdjson
         GIT_REPOSITORY  https://github.com/simdjson/simdjson.git
         GIT_TAG         tags/v4.2.4
         GIT_SHALLOW     TRUE)
-
 FetchContent_MakeAvailable(simdjson)
+##
+
+## Library stduuid
+add_compile_definitions(UUID_SYSTEM_GENERATOR)
+FetchContent_Declare(
+        stduuid
+        GIT_REPOSITORY  https://github.com/mariusbancila/stduuid.git
+        GIT_TAG         tags/v1.2.3
+        GIT_SHALLOW     TRUE)
+FetchContent_MakeAvailable(stduuid)
 ##
 
 target_link_libraries(RedData PRIVATE
         RED4ext::SDK
         RedLib
         simdjson
+        stduuid
 )
 
 ## Debug mode: install scripts (+ tests) and plugin in game folder.
