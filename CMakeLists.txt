@@ -74,9 +74,9 @@ include(FetchContent)
 
 FetchContent_Declare(
         simdjson
-        GIT_REPOSITORY https://github.com/simdjson/simdjson.git
-        GIT_TAG  tags/v3.13.0
-        GIT_SHALLOW TRUE)
+        GIT_REPOSITORY  https://github.com/simdjson/simdjson.git
+        GIT_TAG         tags/v4.2.4
+        GIT_SHALLOW     TRUE)
 
 FetchContent_MakeAvailable(simdjson)
 ##
