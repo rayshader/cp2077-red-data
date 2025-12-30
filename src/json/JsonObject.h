@@ -1,8 +1,4 @@
-#ifndef REDDATA_JSONOBJECT_H
-#define REDDATA_JSONOBJECT_H
-
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
+#pragma once
 
 #include "JsonArray.h"
 #include "JsonVariant.h"
@@ -10,7 +6,6 @@
 namespace RedData::Json {
 
 class JsonObject : public JsonVariant {
- private:
   std::unordered_map<std::string, Red::Handle<JsonVariant>> fields;
 
  public:
@@ -86,5 +81,3 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonObject, {
 
   RTTI_METHOD(to_string, "ToString");
 });
-
-#endif  //REDDATA_JSONOBJECT_H

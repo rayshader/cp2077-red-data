@@ -21,15 +21,18 @@ std::string JsonVariant::to_json(const JsonVariant* p_json,
   if (p_json == nullptr) {
     return "";
   }
+
   if (p_json->is_object()) {
     return JsonObject::to_json(dynamic_cast<const JsonObject*>(p_json),
                                p_current_indent, p_indent);
-  } else if (p_json->is_array()) {
+  }
+
+  if (p_json->is_array()) {
     return JsonArray::to_json(dynamic_cast<const JsonArray*>(p_json),
                               p_current_indent, p_indent);
-  } else {
-    return p_json->to_string({}).c_str();
   }
+
+  return p_json->to_string({}).c_str();
 }
 
 bool JsonVariant::is_undefined() const {
@@ -88,12 +91,8 @@ Red::CString JsonVariant::get_string() const {
   return {};
 }
 
-Red::CString JsonVariant::to_string(
-  const Red::Optional<Red::CString>& p_indent) const {
-  if (type == JsonType::Null) {
-    return "null";
-  }
-  return "<undefined>";
+Red::CString JsonVariant::to_string(const Red::Optional<Red::CString>& p_indent) const {
+  return type == JsonType::Null ? "null" : "<undefined>";
 }
 
 }  // namespace RedData::Json

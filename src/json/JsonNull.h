@@ -1,8 +1,4 @@
-#ifndef REDDATA_JSONNULL_H
-#define REDDATA_JSONNULL_H
-
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
+#pragma once
 
 #include "JsonVariant.h"
 
@@ -23,5 +19,3 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonNull, {
 
   RTTI_PARENT(RedData::Json::JsonVariant);
 });
-
-#endif  //REDDATA_JSONNULL_H

@@ -1,15 +1,10 @@
-#ifndef REDDATA_JSONBOOL_H
-#define REDDATA_JSONBOOL_H
-
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
+#pragma once
 
 #include "JsonVariant.h"
 
 namespace RedData::Json {
 
 class JsonBool : public JsonVariant {
- private:
   bool value;
 
  public:
@@ -18,8 +13,7 @@ class JsonBool : public JsonVariant {
 
   [[nodiscard]] bool get_bool() const override;
 
-  [[nodiscard]] Red::CString to_string(
-    const Red::Optional<Red::CString>& p_indent) const override;
+  [[nodiscard]] Red::CString to_string(const Red::Optional<Red::CString>& p_indent) const override;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonBool);
   RTTI_IMPL_ALLOCATOR();
@@ -36,5 +30,3 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonBool, {
 
   RTTI_METHOD(to_string, "ToString");
 });
-
-#endif  //REDDATA_JSONBOOL_H

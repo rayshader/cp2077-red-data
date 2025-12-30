@@ -23,6 +23,7 @@ set(INC_FILES
 
 set(SRC_FILES
         src/main.cpp
+        src/pch.cpp
 
         src/json/Json.cpp
         src/json/FromJson.cpp
@@ -43,6 +44,8 @@ add_library(RedData SHARED
         ${INC_FILES}
         ${SRC_FILES}
 )
+
+target_precompile_headers(RedData PUBLIC src/pch.h)
 
 target_include_directories(RedData PRIVATE src/)
 target_include_directories(RedData PRIVATE src/json/)

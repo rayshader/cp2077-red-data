@@ -1,9 +1,5 @@
 #include "JsonString.h"
 
-#include <regex>
-#include <utility>
-#include <vector>
-
 namespace RedData::Json {
 
 // Partially implement RFC7159
@@ -27,14 +23,11 @@ Red::CString JsonString::get_string() const {
   return value;
 }
 
-Red::CString JsonString::to_string(
-  const Red::Optional<Red::CString>& p_indent) const {
+Red::CString JsonString::to_string(const Red::Optional<Red::CString>& p_indent) const {
   std::string escaped_value = value;
-
-  for (const auto& rule : escape_rules) {
-    auto regex = std::regex(rule.first);
-
-    escaped_value = std::regex_replace(escaped_value, regex, rule.second);
+  for (const auto& [rule, replace] : escape_rules) {
+    const auto regex = std::regex(rule);
+    escaped_value = std::regex_replace(escaped_value, regex, replace);
   }
   return "\"" + escaped_value + "\"";
 }

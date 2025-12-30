@@ -1,15 +1,10 @@
-#ifndef REDDATA_JSONARRAY_H
-#define REDDATA_JSONARRAY_H
-
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
+#pragma once
 
 #include "JsonVariant.h"
 
 namespace RedData::Json {
 
 class JsonArray : public JsonVariant {
- private:
   Red::DynArray<Red::Handle<JsonVariant>> items;
 
  public:
@@ -109,5 +104,3 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonArray, {
 
   RTTI_METHOD(to_string, "ToString");
 });
-
-#endif  //REDDATA_JSONARRAY_H

@@ -1,18 +1,10 @@
-#ifndef REDDATA_JSONNUMBER_H
-#define REDDATA_JSONNUMBER_H
-
-#include <cstdint>
-
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
-#include <span>
+#pragma once
 
 #include "JsonVariant.h"
 
 namespace RedData::Json {
 
 class JsonNumber : public JsonVariant {
- private:
   uint8_t value[8]{};
 
  public:
@@ -37,8 +29,7 @@ class JsonNumber : public JsonVariant {
   [[nodiscard]] uint64_t get_uint64() const override;
   [[nodiscard]] double get_double() const override;
 
-  [[nodiscard]] Red::CString to_string(
-    const Red::Optional<Red::CString>& p_indent) const override;
+  [[nodiscard]] Red::CString to_string(const Red::Optional<Red::CString>& p_indent) const override;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonNumber);
   RTTI_IMPL_ALLOCATOR();
@@ -57,5 +48,3 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonNumber, {
 
   RTTI_METHOD(to_string, "ToString");
 });
-
-#endif  //REDDATA_JSONNUMBER_H

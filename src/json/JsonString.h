@@ -1,19 +1,12 @@
-#ifndef REDDATA_JSONSTRING_H
-#define REDDATA_JSONSTRING_H
-
-#include <string>
-#include <vector>
-
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
+#pragma once
 
 #include "JsonVariant.h"
 
 namespace RedData::Json {
 
 class JsonString : public JsonVariant {
- private:
   using EscapeRule = std::pair<std::string, std::string>;
+
   static std::vector<EscapeRule> escape_rules;
 
   std::string value;
@@ -24,8 +17,7 @@ class JsonString : public JsonVariant {
 
   [[nodiscard]] Red::CString get_string() const override;
 
-  [[nodiscard]] Red::CString to_string(
-    const Red::Optional<Red::CString>& p_indent) const override;
+  [[nodiscard]] Red::CString to_string(const Red::Optional<Red::CString>& p_indent) const override;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonString);
   RTTI_IMPL_ALLOCATOR();
@@ -42,5 +34,3 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonString, {
 
   RTTI_METHOD(to_string, "ToString");
 });
-
-#endif  //REDDATA_JSONSTRING_H

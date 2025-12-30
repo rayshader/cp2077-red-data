@@ -1,8 +1,4 @@
-#ifndef REDDATA_JSONVARIANT_H
-#define REDDATA_JSONVARIANT_H
-
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
+#pragma once
 
 #include "JsonType.h"
 
@@ -36,8 +32,7 @@ class JsonVariant : public Red::IScriptable {
   [[nodiscard]] virtual double get_double() const;
   [[nodiscard]] virtual Red::CString get_string() const;
 
-  [[nodiscard]] virtual Red::CString to_string(
-    const Red::Optional<Red::CString>& p_indent) const;
+  [[nodiscard]] virtual Red::CString to_string(const Red::Optional<Red::CString>& p_indent) const;
 
   RTTI_IMPL_TYPEINFO(RedData::Json::JsonVariant);
   RTTI_IMPL_ALLOCATOR();
@@ -70,5 +65,3 @@ RTTI_DEFINE_CLASS(RedData::Json::JsonVariant, {
 
   RTTI_METHOD(to_string, "ToString");
 });
-
-#endif  //REDDATA_JSONVARIANT_H

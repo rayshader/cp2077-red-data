@@ -1,12 +1,9 @@
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
-
 #include "Config.h"
 
 namespace RedData {
 
-RED4EXT_C_EXPORT bool RED4EXT_CALL Main(RED4ext::PluginHandle p_handle,
-                                        RED4ext::EMainReason p_reason,
+RED4EXT_C_EXPORT bool RED4EXT_CALL Main(const RED4ext::PluginHandle p_handle,
+                                        const RED4ext::EMainReason p_reason,
                                         const RED4ext::Sdk* p_sdk) {
   RED4EXT_UNUSED_PARAMETER(p_handle);
   RED4EXT_UNUSED_PARAMETER(p_sdk);

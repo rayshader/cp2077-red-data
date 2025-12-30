@@ -1,7 +1,4 @@
-#ifndef REDDATA_JSONTYPE_H
-#define REDDATA_JSONTYPE_H
-
-#include <RedLib.hpp>
+#pragma once
 
 namespace RedData::Json {
 
@@ -20,5 +17,3 @@ enum class JsonType {
 }
 
 RTTI_DEFINE_ENUM(RedData::Json::JsonType, "RedData.Json.JsonType")
-
-#endif  //REDDATA_JSONTYPE_H

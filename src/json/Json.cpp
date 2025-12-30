@@ -1,43 +1,38 @@
-#include <simdjson.h>
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
-
 #include "Json.h"
 #include "JsonFactory.h"
 
 namespace RedData::Json {
 
 void parse_array(const simdjson::dom::array& p_array,
-                 Red::Handle<JsonArray>& p_root);
+                 const Red::Handle<JsonArray>& p_root);
 void parse_object(const simdjson::dom::object& p_object,
-                  Red::Handle<JsonObject>& p_root);
+                  const Red::Handle<JsonObject>& p_root);
 
 Red::Handle<JsonVariant> parse_json(const Red::CString& p_json) {
   simdjson::dom::parser parser;
-  auto document = parser.parse(std::string(p_json.c_str()));
-
+  const auto document = parser.parse(std::string(p_json.c_str()));
   if (document.is_object()) {
-    auto object = simdjson::dom::object(document);
+    const auto object = simdjson::dom::object(document);
     auto root = JsonFactory::CreateObject();
-
     parse_object(object, root);
     return root;
-  } else if (document.is_array()) {
-    auto array = simdjson::dom::array(document);
-    auto root = JsonFactory::CreateArray();
+  }
 
+  if (document.is_array()) {
+    const auto array = simdjson::dom::array(document);
+    auto root = JsonFactory::CreateArray();
     parse_array(array, root);
     return root;
   }
+
   return {};
 }
 
 void parse_object(const simdjson::dom::object& p_object,
-                  Red::Handle<JsonObject>& p_root) {
+                  const Red::Handle<JsonObject>& p_root) {
   for (const auto& key_value : p_object) {
     std::string key(key_value.key);
     auto el_value = key_value.value;
-
     if (el_value.is_bool()) {
       p_root->set_key_bool(key, el_value);
     } else if (el_value.is_int64()) {
@@ -57,7 +52,6 @@ void parse_object(const simdjson::dom::object& p_object,
     } else if (el_value.is_array()) {
       auto value = JsonFactory::CreateArray();
       auto sub_array = simdjson::dom::array(el_value);
-
       parse_array(sub_array, value);
       p_root->set_key(key, value);
     } else if (el_value.is_null()) {
@@ -69,7 +63,7 @@ void parse_object(const simdjson::dom::object& p_object,
 }
 
 void parse_array(const simdjson::dom::array& p_array,
-                 Red::Handle<JsonArray>& p_root) {
+                 const Red::Handle<JsonArray>& p_root) {
   for (const auto& item : p_array) {
     if (item.is_bool()) {
       p_root->add_item_bool(item);
@@ -84,13 +78,11 @@ void parse_array(const simdjson::dom::array& p_array,
     } else if (item.is_object()) {
       auto value = JsonFactory::CreateObject();
       auto sub_object = simdjson::dom::object(item);
-
       parse_object(sub_object, value);
       p_root->add_item(value);
     } else if (item.is_array()) {
       auto value = JsonFactory::CreateArray();
       auto sub_array = simdjson::dom::array(item);
-
       parse_array(sub_array, value);
       p_root->add_item(value);
     } else if (item.is_null()) {
@@ -103,4 +95,6 @@ void parse_array(const simdjson::dom::array& p_array,
 
 }  // namespace RedData::Json
 
-RTTI_DEFINE_GLOBALS({ RTTI_FUNCTION(RedData::Json::parse_json, "RedData.Json.ParseJson"); });
+RTTI_DEFINE_GLOBALS({
+  RTTI_FUNCTION(RedData::Json::parse_json, "RedData.Json.ParseJson");
+});

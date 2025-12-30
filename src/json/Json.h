@@ -1,6 +1,4 @@
-#include <simdjson.h>
-#include <RED4ext/RED4ext.hpp>
-#include <RedLib.hpp>
+#pragma once
 
 #include "JsonVariant.h"
 
