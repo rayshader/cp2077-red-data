@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ------------------------
 
+## [0.11.0] - 2026-10-23
+### Changed
+- support patch 2.5.
+- bump `simdjson` to 5.0.5 (was 4.6.3).
+
+------------------------
+
 ## [0.10.1] - 2026-05-07
 ### Added
 - support Enum and Bitfield types with `ToJson` and `FromJson`.
@@ -119,7 +126,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - parse/create/format Json data.
 
 <!-- Table of releases -->
-[Unreleased]: https://github.com/rayshader/cp2077-red-data/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/rayshader/cp2077-red-data/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/rayshader/cp2077-red-data/compare/v0.10.1...v0.110
 [0.10.1]: https://github.com/rayshader/cp2077-red-data/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/rayshader/cp2077-red-data/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/rayshader/cp2077-red-data/compare/v0.8.1...v0.9.0
