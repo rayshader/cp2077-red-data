@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- support patch 2.5.
+- bump `simdjson` to 5.0.5 (was 4.6.3).
+
 ------------------------
 
 ## [0.10.1] - 2026-05-07
